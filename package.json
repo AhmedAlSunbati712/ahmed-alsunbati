@@ -6,7 +6,7 @@
   "homepage": "https://AhmedAlSunbati712.github.io/ahmed-alsunbati",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
