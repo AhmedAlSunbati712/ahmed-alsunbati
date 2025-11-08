@@ -8,7 +8,7 @@ const projects = [
     {
       title: "Yalnix",
       description: " A UNIX-like operating system kernel for the simulated DCS-58 architecture",
-      link: "#",
+      link: "https://github.com/AhmedAlSunbati712/tiny-kernels",
       img: yalnix
     },
     {
@@ -20,13 +20,13 @@ const projects = [
     {
       title: "Nuggets",
       description: "A C-based multiplayer game in which players navigate a mapped environment to collect gold nuggets",
-      link: "#",
+      link: "https://github.com/AhmedAlSunbati712/Nuggets-CS50-Group-project",
       img: img3
     },
     {
       title: "Brain Tumor analysis",
       description: "Leveraging ResNet and U-Net for tumor classification and segmentation.",
-      link: "#",
+      link: "https://github.com/xghouftw/brain-tumor-analysis",
       img: img1
     },
 
