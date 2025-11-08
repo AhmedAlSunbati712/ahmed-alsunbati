@@ -45,34 +45,20 @@ export default function ProjectCard({ project }) {
         </div>
 
         {/* Buttons — fixed position inside card */}
-        <div className="flex gap-3 pt-5 mt-auto">
-          {project.github && (
+        <div className="w-full flex justify-center gap-3 pt-5 mt-auto">
+          {project.link && (
             <Button
-              size="sm"
+              size="md"
               leftIcon={<FaGithub />}
               as="a"
-              href={project.github}
+              href={project.link}
               target="_blank"
-              bg="black"
               color="white"
+              colorScheme="teal"
               _hover={{ bg: "gray.800" }}
               className="transition-all duration-200"
             >
               Code
-            </Button>
-          )}
-          {project.link && (
-            <Button
-              size="sm"
-              leftIcon={<FaExternalLinkAlt />}
-              as="a"
-              href={project.link}
-              target="_blank"
-              colorScheme="purple"
-              variant="outline"
-              className="transition-all duration-200"
-            >
-              Demo
             </Button>
           )}
         </div>
