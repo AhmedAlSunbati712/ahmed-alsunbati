@@ -8,7 +8,7 @@ const projects = [
     {
       title: "Yalnix",
       description: " A UNIX-like operating system kernel for the simulated DCS-58 architecture",
-      link: "",
+      link: "https://github.com/AhmedAlSunbati712/tiny-kernels",
       img: yalnix
     },
     {
