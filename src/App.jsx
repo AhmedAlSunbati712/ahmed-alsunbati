@@ -1,12 +1,27 @@
-import { useState } from 'react'
-import './App.css'
-import Portfolio from './screens/Home'
-
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
+import { Home } from "./pages/Home";
+import { NotFound } from "./pages/NotFound";
+import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react"; 
 
 function App() {
   return (
-    <Portfolio />
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Analytics />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
