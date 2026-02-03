@@ -6,7 +6,7 @@ import path from "path";
 // https://vitejs.dev/config/
 // Use "/" in dev so localhost:5173/ works; use repo path for production (GitHub Pages)
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/mywebsite/" : "/",
+  base: process.env.NODE_ENV === "production" ? "/ahmed-alsunbati/" : "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

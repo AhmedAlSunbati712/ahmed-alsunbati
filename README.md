@@ -1,3 +1,21 @@
+# Ahmed Al Sunbati – Portfolio
+
+## GitHub Pages deploy
+
+1. **Deploy:** `npm run deploy` (builds and pushes `dist/` to the `gh-pages` branch).
+2. **Turn on Pages:** In the repo on GitHub go to **Settings → Pages**. Under "Build and deployment":
+   - **Source:** Deploy from a branch
+   - **Branch:** `gh-pages` (not main)
+   - **Folder:** / (root)
+   - Save
+3. **URL:** After a minute or two the site is at `https://<username>.github.io/<repo-name>/`.  
+   The config is set for repo **ahmed-alsunbati**: use `https://ahmedalsunbati712.github.io/ahmed-alsunbati/`.  
+   If your repo is named something else (e.g. mywebsite), change `base` in `vite.config.js` to `"/your-repo-name/"` and `homepage` in `package.json` to match, then run `npm run deploy` again.
+
+If you see 404, the usual cause is Pages still set to the **main** branch instead of **gh-pages**.
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
