@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://AhmedAlSunbati712.github.io/ahmed-alsunbati",
+  "homepage": "https://ahmedalsunbati712.github.io/mywebsite",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
