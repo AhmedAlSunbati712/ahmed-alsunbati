@@ -3,10 +3,21 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-// https://vitejs.dev/config/
-// Use "/" in dev so localhost:5173/ works; use repo path for production (GitHub Pages)
+// Base path: dev = "/"; Vercel = "/" (use VITE_BASE=/ or rely on VERCEL=1); GH Pages = "/ahmed-alsunbati/"
+const explicitBase = process.env.VITE_BASE;
+const isProduction = process.env.NODE_ENV === "production";
+const isVercel = !!process.env.VERCEL;
+const base =
+  explicitBase !== undefined && explicitBase !== ""
+    ? (explicitBase.endsWith("/") ? explicitBase : `${explicitBase}/`)
+    : !isProduction
+      ? "/"
+      : isVercel
+        ? "/"
+        : "/ahmed-alsunbati/";
+
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/ahmed-alsunbati/" : "/",
+  base,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

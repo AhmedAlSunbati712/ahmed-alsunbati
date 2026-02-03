@@ -14,7 +14,7 @@ function App() {
       disableTransitionOnChange
     >
       <Toaster />
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL === "/" ? "" : import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <Routes>
           <Route index element={<Home />} />
           <Route path="*" element={<NotFound />} />

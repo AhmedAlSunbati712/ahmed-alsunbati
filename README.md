@@ -14,6 +14,11 @@
 
 If you see 404, the usual cause is Pages still set to the **main** branch instead of **gh-pages**.
 
+## Vercel deploy
+
+1. Connect the repo in Vercel and deploy. The app uses base `/` when Vercel sets `VERCEL=1` during build.
+2. **If assets 404 on Vercel:** In the Vercel project go to **Settings → Environment Variables**, add `VITE_BASE` = `/` (for Production), and redeploy so the build uses root as the base path.
+
 ---
 
 # React + Vite

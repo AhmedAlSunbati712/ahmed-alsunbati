@@ -1,6 +1,7 @@
 import { ArrowRight, Github, ChevronUp, Star, Code, Sparkles, X } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { assetUrl } from "@/lib/utils";
 
 const projects = [
   {
@@ -276,7 +277,7 @@ export const ProjectsSection = () => {
                   {/* Image Section */}
                   <div className="relative h-60 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
                     <img
-                      src={project.image}
+                      src={assetUrl(project.image)}
                       alt={project.title}
                       className="w-full h-full object-cover"
                       loading="lazy"

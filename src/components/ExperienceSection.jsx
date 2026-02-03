@@ -1,5 +1,6 @@
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
+import { assetUrl } from "@/lib/utils";
 
 const experiences = [
   {
@@ -129,7 +130,7 @@ const ExperienceCard = ({ experience, index }) => {
               {/* Company Logo */}
               <div className="w-14 h-14 rounded-xl overflow-hidden border border-border/50 flex-shrink-0 bg-background">
                 <img
-                  src={experience.image}
+                  src={assetUrl(experience.image)}
                   alt={experience.company}
                   className="w-full h-full object-cover"
                 />

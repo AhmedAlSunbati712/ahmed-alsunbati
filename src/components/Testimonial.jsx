@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useInView } from "framer-motion";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { assetUrl } from "@/lib/utils";
 
 export const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -199,7 +200,7 @@ export const TestimonialSection = () => {
                         <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-primary/20 group-hover:border-primary/50 overflow-hidden transition-all">
                           {testimonial.image ? (
                             <img
-                              src={testimonial.image}
+                              src={assetUrl(testimonial.image)}
                               alt={testimonial.name}
                               className="w-full h-full object-cover"
                               loading="lazy"

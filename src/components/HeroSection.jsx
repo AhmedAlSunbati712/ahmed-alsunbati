@@ -1,6 +1,7 @@
 import { Github, Linkedin } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { assetUrl } from "@/lib/utils";
 
 export const HeroSection = () => {
   const ref = useRef(null);
@@ -106,7 +107,7 @@ export const HeroSection = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <img 
-                  src="/me.jpg" 
+                  src={assetUrl("/me.jpg")} 
                   alt="Ahmed Al-Sunbati" 
                   className="w-full h-full object-cover"
                 />
