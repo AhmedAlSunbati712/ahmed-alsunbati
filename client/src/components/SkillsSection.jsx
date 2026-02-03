@@ -1,151 +1,110 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Import your images
-import htmlIcon from "@/assets/icons/html.png";
-import cssIcon from "@/assets/icons/css.png";
-import jsIcon from "@/assets/icons/javascript.png";
-import tsIcon from "@/assets/icons/typescript.png";
-import reactIcon from "@/assets/icons/react.png";
-import nextjsIcon from "@/assets/icons/nextjs.png";
-import nodejsIcon from "@/assets/icons/nodejs.png";
-import expressIcon from "@/assets/icons/express.png";
-import mongodbIcon from "@/assets/icons/mongodb.png";
-import postgresqlIcon from "@/assets/icons/postgresql.png";
-import graphqlIcon from "@/assets/icons/graphql.png";
-import javaIcon from "@/assets/icons/java.png";
-import pythonIcon from "@/assets/icons/python.png";
-import gitIcon from "@/assets/icons/git.png";
-import githubIcon from "@/assets/icons/github.png";
-import dockerIcon from "@/assets/icons/docker.png";
-import SQLIcon from "@/assets/icons/sql.png";
-import MySQLIcon from "@/assets/icons/mysql.png";
+// React Icons - Simple Icons (tech logos)
+import { 
+  SiJavascript, 
+  SiTypescript, 
+  SiReact, 
+  SiNodedotjs, 
+  SiExpress, 
+  SiMongodb, 
+  SiPostgresql, 
+  SiGraphql, 
+  SiGit, 
+  SiDocker,
+  SiPython,
+  SiAngular,
+  SiRedis,
+  SiAmazonwebservices,
+  SiKubernetes,
+  SiTensorflow,
+  SiHtml5,
+  SiCss3,
+  SiGo,
+  SiCplusplus,
+  SiC,
+  SiNvidia
+} from "react-icons/si";
+import { FaJava } from "react-icons/fa";
+import { TbApi, TbBrain, TbDatabase, TbRobot, TbMessageChatbot } from "react-icons/tb";
+import { BsGearWideConnected } from "react-icons/bs";
 
 const skills = [
   // Languages
-  { name: "Java", level: 90, category: "languages", icon: "java" },
-  { name: "Python", level: 90, category: "languages", icon: "python" },
-  { name: "JavaScript", level: 90, category: "languages", icon: "javascript" },
-  { name: "TypeScript", level: 85, category: "languages", icon: "typescript" },
-  { name: "C", level: 85, category: "languages", icon: null },
-  { name: "C++", level: 80, category: "languages", icon: null },
-  { name: "Go", level: 75, category: "languages", icon: null },
+  { name: "Java", category: "languages", icon: FaJava, color: "#ED8B00" },
+  { name: "Python", category: "languages", icon: SiPython, color: "#3776AB" },
+  { name: "JavaScript", category: "languages", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "TypeScript", category: "languages", icon: SiTypescript, color: "#3178C6" },
+  { name: "C", category: "languages", icon: SiC, color: "#A8B9CC" },
+  { name: "C++", category: "languages", icon: SiCplusplus, color: "#00599C" },
+  { name: "Go", category: "languages", icon: SiGo, color: "#00ADD8" },
 
   // Web & Full-Stack
-  { name: "React", level: 90, category: "fullstack", icon: "react" },
-  { name: "Angular", level: 75, category: "fullstack", icon: null },
-  { name: "Node.js", level: 90, category: "fullstack", icon: "nodejs" },
-  { name: "Express", level: 85, category: "fullstack", icon: "express" },
-  { name: "Redis", level: 80, category: "fullstack", icon: null },
-  { name: "MongoDB", level: 85, category: "fullstack", icon: "mongodb" },
-  { name: "PostgreSQL", level: 85, category: "fullstack", icon: "postgresql" },
-  { name: "GraphQL", level: 80, category: "fullstack", icon: "graphql" },
-  { name: "REST API", level: 90, category: "fullstack", icon: null },
-  { name: "HTML/CSS", level: 90, category: "fullstack", icon: "html" },
+  { name: "React", category: "fullstack", icon: SiReact, color: "#61DAFB" },
+  { name: "Angular", category: "fullstack", icon: SiAngular, color: "#DD0031" },
+  { name: "Node.js", category: "fullstack", icon: SiNodedotjs, color: "#339933" },
+  { name: "Express", category: "fullstack", icon: SiExpress, color: "#000000" },
+  { name: "Redis", category: "fullstack", icon: SiRedis, color: "#DC382D" },
+  { name: "MongoDB", category: "fullstack", icon: SiMongodb, color: "#47A248" },
+  { name: "PostgreSQL", category: "fullstack", icon: SiPostgresql, color: "#4169E1" },
+  { name: "GraphQL", category: "fullstack", icon: SiGraphql, color: "#E10098" },
+  { name: "REST API", category: "fullstack", icon: TbApi, color: "#06B6D4" },
+  { name: "HTML/CSS", category: "fullstack", icon: SiHtml5, color: "#E34F26" },
 
   // Tools
-  { name: "Git", level: 90, category: "tools", icon: "git" },
-  { name: "CI/CD", level: 80, category: "tools", icon: null },
-  { name: "Docker", level: 85, category: "tools", icon: "docker" },
-  { name: "AWS", level: 80, category: "tools", icon: null },
-  { name: "Kubernetes", level: 70, category: "tools", icon: null },
-  { name: "CUDA", level: 70, category: "tools", icon: null },
+  { name: "Git", category: "tools", icon: SiGit, color: "#F05032" },
+  { name: "CI/CD", category: "tools", icon: BsGearWideConnected, color: "#06B6D4" },
+  { name: "Docker", category: "tools", icon: SiDocker, color: "#2496ED" },
+  { name: "AWS", category: "tools", icon: SiAmazonwebservices, color: "#FF9900" },
+  { name: "Kubernetes", category: "tools", icon: SiKubernetes, color: "#326CE5" },
+  { name: "CUDA", category: "tools", icon: SiNvidia, color: "#76B900" },
 
   // AI & Data
-  { name: "TensorFlow", level: 80, category: "aidata", icon: null },
-  { name: "Deep Learning", level: 85, category: "aidata", icon: null },
-  { name: "Reinforcement Learning", level: 75, category: "aidata", icon: null },
-  { name: "NLP", level: 80, category: "aidata", icon: null },
-  { name: "RAG", level: 80, category: "aidata", icon: null },
-  { name: "LLMs", level: 85, category: "aidata", icon: null },
-  { name: "Data Analysis", level: 85, category: "aidata", icon: null },
+  { name: "TensorFlow", category: "aidata", icon: SiTensorflow, color: "#FF6F00" },
+  { name: "Deep Learning", category: "aidata", icon: TbBrain, color: "#8B5CF6" },
+  { name: "Reinforcement Learning", category: "aidata", icon: TbRobot, color: "#8B5CF6" },
+  { name: "NLP", category: "aidata", icon: TbMessageChatbot, color: "#8B5CF6" },
+  { name: "RAG", category: "aidata", icon: TbDatabase, color: "#8B5CF6" },
+  { name: "LLMs", category: "aidata", icon: TbBrain, color: "#8B5CF6" },
+  { name: "Data Analysis", category: "aidata", icon: TbDatabase, color: "#8B5CF6" },
 ];
 
 const categories = [
-  { id: "all", label: "All Skills", color: "bg-gradient-to-r from-purple-500 to-pink-500" },
-  { id: "languages", label: "Languages", color: "bg-gradient-to-r from-blue-500 to-cyan-500" },
-  { id: "fullstack", label: "Web & Full-Stack", color: "bg-gradient-to-r from-green-500 to-emerald-500" },
-  { id: "tools", label: "Tools", color: "bg-gradient-to-r from-orange-500 to-yellow-500" },
-  { id: "aidata", label: "AI & Data", color: "bg-gradient-to-r from-pink-500 to-rose-500" },
+  { id: "all", label: "All Skills", color: "bg-primary" },
+  { id: "languages", label: "Languages", color: "bg-blue-500" },
+  { id: "fullstack", label: "Web & Full-Stack", color: "bg-emerald-500" },
+  { id: "tools", label: "Tools", color: "bg-orange-500" },
+  { id: "aidata", label: "AI & Data", color: "bg-violet-500" },
 ];
 
-const iconImages = {
-  html: htmlIcon,
-  css: cssIcon,
-  javascript: jsIcon,
-  typescript: tsIcon,
-  react: reactIcon,
-  nextjs: nextjsIcon,
-  nodejs: nodejsIcon,
-  express: expressIcon,
-  mongodb: mongodbIcon,
-  postgresql: postgresqlIcon,
-  graphql: graphqlIcon,
-  java: javaIcon,
-  python: pythonIcon,
-  git: gitIcon,
-  github: githubIcon,
-  docker: dockerIcon,
-  sql: SQLIcon,
-  mysql: MySQLIcon,
-};
-
-const SkillBar = ({ level }) => (
-  <div className="w-full h-3 bg-secondary/20 rounded-full overflow-hidden">
-    <motion.div
-      initial={{ width: 0 }}
-      animate={{ width: `${level}%` }}
-      transition={{ duration: 1.5, delay: 0.2 }}
-      className={`h-full rounded-full ${
-        level > 75 ? 'bg-gradient-to-r from-green-400 to-emerald-500' : 
-        level > 50 ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 
-        'bg-gradient-to-r from-red-400 to-pink-500'
-      }`}
-    />
-  </div>
-);
-
-const SkillIcon = ({ skill }) => (
-  <div className="w-16 h-16 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-    {skill.icon && iconImages[skill.icon] ? (
-      <img src={iconImages[skill.icon]} alt={skill.name} className="w-8 h-8 object-contain" />
-    ) : (
-      <span className="text-xs font-bold text-primary text-center px-1">{skill.name.slice(0, 3)}</span>
-    )}
-  </div>
-);
-
-const InfiniteScrollSkills = ({ skills }) => {
-  const duplicatedSkills = [...skills, ...skills, ...skills];
+const SkillCard = ({ skill, index }) => {
+  const IconComponent = skill.icon;
   
   return (
-    <div className="overflow-hidden py-8">
-      <motion.div
-        className="flex gap-8 mb-8"
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        {duplicatedSkills.map((skill, index) => (
-          <div key={`${skill.name}-${index}`} className="flex-shrink-0 flex flex-col items-center gap-2">
-            <SkillIcon skill={skill} />
-            <span className="text-sm font-medium text-center">{skill.name}</span>
-          </div>
-        ))}
-      </motion.div>
-      
-      <motion.div
-        className="flex gap-8"
-        animate={{ x: ["-100%", "0%"] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        {[...duplicatedSkills].reverse().map((skill, index) => (
-          <div key={`${skill.name}-reverse-${index}`} className="flex-shrink-0 flex flex-col items-center gap-2">
-            <SkillIcon skill={skill} />
-            <span className="text-sm font-medium text-center">{skill.name}</span>
-          </div>
-        ))}
-      </motion.div>
-    </div>
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3, delay: index * 0.03 }}
+      className="group"
+    >
+      <div className="bg-card p-4 rounded-xl border border-border/30 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-4">
+        {/* Icon */}
+        <div className="w-10 h-10 rounded-lg bg-background flex items-center justify-center flex-shrink-0">
+          <IconComponent 
+            className="w-6 h-6 transition-transform group-hover:scale-110" 
+            style={{ color: skill.color }}
+          />
+        </div>
+        
+        {/* Name */}
+        <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+          {skill.name}
+        </span>
+      </div>
+    </motion.div>
   );
 };
 
@@ -156,87 +115,54 @@ export const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="py-28 px-4 bg-gradient-to-br from-background via-secondary/5 to-background">
+    <section id="skills" className="py-20 md:py-28 px-4 bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto max-w-6xl">
+        {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-20"
+          viewport={{ once: true }}
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
-            My Skills
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
+            Skills
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Technologies I've mastered and my proficiency levels
+            Technologies and tools I work with
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
+        {/* Filter Buttons */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-2 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+        >
           {categories.map((category) => (
-            <motion.button
+            <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-2.5 rounded-full font-medium border border-transparent hover:shadow-lg ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === category.id
                   ? `${category.color} text-white shadow-md`
-                  : "bg-secondary/50 text-foreground hover:bg-secondary/70"
+                  : "bg-card text-foreground border border-border hover:border-primary/50"
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {category.label}
-            </motion.button>
+            </button>
           ))}
-        </div>
+        </motion.div>
 
-        {activeCategory === "all" ? (
-          <InfiniteScrollSkills skills={skills} />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredSkills.map((skill) => (
-                <motion.div
-                  key={skill.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-card p-6 rounded-2xl border border-border/30 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-lg group"
-                >
-                  <div className="flex items-start gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center">
-                      {skill.icon && iconImages[skill.icon] ? (
-                        <img src={iconImages[skill.icon]} alt={skill.name} className="w-6 h-6 object-contain" />
-                      ) : (
-                        <span className="text-xs font-bold text-primary">{skill.name.slice(0, 3)}</span>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-center mb-2">
-                        <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">
-                          {skill.name}
-                        </h3>
-                        <span className={`text-sm font-medium px-2 py-1 rounded-full ${
-                          skill.level > 75 ? 'bg-emerald-500/10 text-emerald-500' : 
-                          skill.level > 50 ? 'bg-amber-500/10 text-amber-500' : 
-                          'bg-pink-500/10 text-pink-500'
-                        }`}>
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <SkillBar level={skill.level} />
-                      <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-                        <span>Basic</span>
-                        <span>Advanced</span>
-                        <span>Expert</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        )}
+        {/* Skills Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill, index) => (
+              <SkillCard key={skill.name} skill={skill} index={index} />
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

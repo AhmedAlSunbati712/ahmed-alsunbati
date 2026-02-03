@@ -51,7 +51,7 @@ const experiences = [
       "Automated 200+ simulation runs with multithreading and batch processing; built visualization and reporting scripts to analyze system phases"
     ],
     image: "/experiences/spin.png",
-    accentColor: "from-violet-500 to-purple-600",
+    accentColor: "from-slate-500 to-gray-600",
     current: false
   }
 ];
@@ -257,7 +257,7 @@ export const ExperienceSection = () => {
           {/* Vertical Timeline Line */}
           <div className="absolute left-[7px] lg:left-1/2 lg:-translate-x-1/2 top-0 bottom-0 w-0.5">
             <motion.div
-              className="h-full bg-gradient-to-b from-primary via-purple-500 to-pink-500 rounded-full"
+              className="h-full bg-gradient-to-b from-cyan-500 via-teal-500 to-emerald-500 rounded-full"
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
               transition={{ duration: 1, delay: 0.3 }}

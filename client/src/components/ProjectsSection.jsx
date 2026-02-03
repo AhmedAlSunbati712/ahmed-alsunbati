@@ -8,7 +8,7 @@ const projects = [
     title: "Smart Receipts",
     category: "Web Development",
     description: "A scalable full-stack receipt processing system with Express, PostgreSQL/Prisma, and AWS S3; features an asynchronous BullMQ + Redis pipeline for OCR (Tesseract) and LLM-based data extraction, with a React + TypeScript frontend for real-time visualization.",
-    image: "/projects/vibebite.png", // TODO: Replace with actual Smart Receipts screenshot
+    image: "/projects/smart-receipts.png", // TODO: Replace with actual Smart Receipts screenshot
     tags: ["TypeScript", "Express", "PostgreSQL", "Prisma", "BullMQ", "Redis", "AWS S3", "Tesseract OCR", "LLM"],
     githubUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-backend",
     frontendUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-frontend",
@@ -22,11 +22,11 @@ const projects = [
     title: "P2P VideoChat over UDP",
     category: "Networking",
     description: "A peer-to-peer encrypted video calling system in Python over UDP; features custom reliable transport with sequence numbering and selective retransmission, multithreading for real-time frame processing, and Diffie-Hellman key exchange for secure communication.",
-    image: "/projects/tse.png", // TODO: Replace with actual VideoChat screenshot
+    image: "/projects/videochat.png", // TODO: Replace with actual VideoChat screenshot
     tags: ["Python", "UDP Sockets", "Multithreading", "Diffie-Hellman", "Cryptography", "Network Protocol"],
     githubUrl: "https://github.com/AhmedAlSunbati712/videochat-app",
     featured: true,
-    accentColor: "from-violet-500 to-purple-600",
+    accentColor: "from-cyan-500 to-teal-600",
     status: "Complete",
     highlights: ["P2P architecture", "End-to-end encryption", "Custom reliable transport"]
   },
@@ -52,7 +52,7 @@ const projects = [
     tags: ["C", "Multithreading", "Search Algorithms"],
     githubUrl: "https://github.com/AhmedAlSunbati712/Tiny-Search-Engine",
     featured: true,
-    accentColor: "from-purple-500 to-indigo-600",
+    accentColor: "from-blue-500 to-indigo-600",
     status: "Complete",
     highlights: ["Multithreaded crawling", "Indexing", "Ranked retrieval"]
   },
@@ -104,7 +104,7 @@ const projects = [
     tags: ["Python", "LSTM", "Neuroscience"],
     githubUrl: "https://github.com/AhmedAlSunbati712/memgrid",
     featured: true,
-    accentColor: "from-indigo-500 to-purple-600",
+    accentColor: "from-indigo-500 to-blue-600",
     status: "Complete",
     highlights: ["LSTM networks", "Spatial navigation", "Biological modeling"]
   }
@@ -114,7 +114,7 @@ const categoryColors = {
   "Systems Programming": "from-blue-500/20 to-cyan-600/20 text-blue-600 border-blue-500/30",
   "Machine Learning": "from-emerald-500/20 to-teal-600/20 text-emerald-600 border-emerald-500/30",
   "Web Development": "from-pink-500/20 to-rose-600/20 text-pink-600 border-pink-500/30",
-  "Networking": "from-violet-500/20 to-purple-600/20 text-violet-600 border-violet-500/30"
+  "Networking": "from-cyan-500/20 to-teal-600/20 text-cyan-600 border-cyan-500/30"
 };
 
 export const ProjectsSection = () => {
@@ -274,7 +274,7 @@ export const ProjectsSection = () => {
                 <div className="relative bg-background border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 h-full flex flex-col">
                   
                   {/* Image Section */}
-                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                  <div className="relative h-60 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
                     <img
                       src={project.image}
                       alt={project.title}
