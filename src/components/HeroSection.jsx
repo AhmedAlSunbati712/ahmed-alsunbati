@@ -12,19 +12,6 @@ export const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
         >
-                    <div className="flex justify-center lg:justify-end">
-            <div className="relative h-[20rem] w-[20rem] sm:h-[22rem] sm:w-[22rem]">
-              <div className="absolute inset-0 rounded-full border border-border/70 bg-surface-subtle shadow-sm" />
-              <div className="absolute inset-[4px] rounded-full border border-border/60" />
-              <div className="absolute inset-[10px] overflow-hidden rounded-full border border-border/80 bg-surface">
-                <img
-                  src={assetUrl("/hero-section avatar.png")}
-                  alt="Ahmed Al-Sunbati portrait"
-                  className="h-full w-full object-cover object-top scale-[1.18] translate-y-2"
-                />
-              </div>
-            </div>
-          </div>
           <div className="text-left">
             <h1
               className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl"
@@ -71,7 +58,19 @@ export const HeroSection = () => {
             </p>
           </div>
 
-
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative h-[20rem] w-[20rem] sm:h-[22rem] sm:w-[22rem]">
+              <div className="absolute inset-0 rounded-full border border-border/70 bg-surface-subtle shadow-sm" />
+              <div className="absolute inset-[4px] rounded-full border border-border/60" />
+              <div className="absolute inset-[10px] overflow-hidden rounded-full border border-border/80 bg-surface">
+                <img
+                  src={assetUrl("/hero-section avatar.png")}
+                  alt="Ahmed Al-Sunbati portrait"
+                  className="h-full w-full object-cover object-top scale-[1.18] translate-y-2"
+                />
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
