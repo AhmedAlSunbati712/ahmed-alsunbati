@@ -1,0 +1,139 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/schema.json",
+  "meta": {
+    "name": "portfolio-calm-light",
+    "version": "1.0.0",
+    "description": "Soft handcrafted minimal tokens for portfolio redesign."
+  },
+  "color": {
+    "background": {
+      "page": { "value": "#FAFAF9" },
+      "surface": { "value": "#FFFFFF" },
+      "surfaceSubtle": { "value": "#F5F5F4" }
+    },
+    "text": {
+      "primary": { "value": "#1C1917" },
+      "secondary": { "value": "#44403C" },
+      "muted": { "value": "#78716C" },
+      "inverse": { "value": "#FAFAF9" }
+    },
+    "border": {
+      "subtle": { "value": "#E7E5E4" },
+      "strong": { "value": "#D6D3D1" },
+      "focus": { "value": "#2563EB" }
+    },
+    "accent": {
+      "primary": { "value": "#0F766E" },
+      "primaryHover": { "value": "#115E59" },
+      "primarySoft": { "value": "#CCFBF1" }
+    },
+    "status": {
+      "success": { "value": "#166534" },
+      "warning": { "value": "#92400E" },
+      "info": { "value": "#1D4ED8" }
+    }
+  },
+  "typography": {
+    "family": {
+      "sans": {
+        "value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\", sans-serif"
+      },
+      "mono": {
+        "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+      }
+    },
+    "size": {
+      "display": { "value": "3.5rem" },
+      "h1": { "value": "2.5rem" },
+      "h2": { "value": "2rem" },
+      "h3": { "value": "1.5rem" },
+      "bodyLg": { "value": "1.125rem" },
+      "body": { "value": "1rem" },
+      "small": { "value": "0.875rem" },
+      "xs": { "value": "0.75rem" }
+    },
+    "weight": {
+      "regular": { "value": "400" },
+      "medium": { "value": "500" },
+      "semibold": { "value": "600" },
+      "bold": { "value": "700" }
+    },
+    "lineHeight": {
+      "tight": { "value": "1.2" },
+      "heading": { "value": "1.3" },
+      "body": { "value": "1.65" },
+      "compact": { "value": "1.45" }
+    },
+    "tracking": {
+      "tight": { "value": "-0.015em" },
+      "normal": { "value": "0em" },
+      "wide": { "value": "0.02em" }
+    }
+  },
+  "spacing": {
+    "0": { "value": "0px" },
+    "1": { "value": "4px" },
+    "2": { "value": "8px" },
+    "3": { "value": "12px" },
+    "4": { "value": "16px" },
+    "5": { "value": "20px" },
+    "6": { "value": "24px" },
+    "8": { "value": "32px" },
+    "10": { "value": "40px" },
+    "12": { "value": "48px" },
+    "16": { "value": "64px" },
+    "20": { "value": "80px" },
+    "24": { "value": "96px" }
+  },
+  "radius": {
+    "none": { "value": "0px" },
+    "sm": { "value": "6px" },
+    "md": { "value": "10px" },
+    "lg": { "value": "14px" },
+    "round": { "value": "999px" }
+  },
+  "shadow": {
+    "none": { "value": "none" },
+    "sm": { "value": "0 1px 2px rgba(28, 25, 23, 0.06)" },
+    "md": { "value": "0 4px 10px rgba(28, 25, 23, 0.08)" },
+    "lg": { "value": "0 10px 25px rgba(28, 25, 23, 0.1)" }
+  },
+  "motion": {
+    "duration": {
+      "fast": { "value": "120ms" },
+      "normal": { "value": "200ms" },
+      "slow": { "value": "320ms" }
+    },
+    "easing": {
+      "standard": { "value": "cubic-bezier(0.2, 0, 0, 1)" },
+      "gentle": { "value": "cubic-bezier(0.25, 0.1, 0.25, 1)" }
+    },
+    "reduced": {
+      "duration": { "value": "1ms" },
+      "enabled": { "value": false }
+    }
+  },
+  "component": {
+    "button": {
+      "height": { "value": "40px" },
+      "radius": { "value": "{radius.md.value}" },
+      "paddingX": { "value": "{spacing.4.value}" }
+    },
+    "card": {
+      "radius": { "value": "{radius.lg.value}" },
+      "border": { "value": "{color.border.subtle.value}" },
+      "shadow": { "value": "{shadow.sm.value}" }
+    },
+    "chip": {
+      "radius": { "value": "{radius.round.value}" },
+      "fontSize": { "value": "{typography.size.xs.value}" },
+      "paddingX": { "value": "{spacing.3.value}" },
+      "paddingY": { "value": "{spacing.1.value}" }
+    },
+    "avatarFrame": {
+      "radius": { "value": "{radius.round.value}" },
+      "border": { "value": "{color.border.strong.value}" },
+      "shadow": { "value": "{shadow.md.value}" }
+    }
+  }
+}

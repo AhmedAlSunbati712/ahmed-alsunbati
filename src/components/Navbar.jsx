@@ -1,179 +1,66 @@
-import { useEffect, useState, useRef } from "react";
-import {
-  Home,
-  Code,
-  Award,
-  FolderGit2,
-  Sun,
-  Moon,
-  Github,
-  Linkedin,
-} from "lucide-react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { Github, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
+import { assetUrl } from "@/lib/utils";
 
 const navItems = [
-  { name: "Home", href: "#hero", icon: Home },
-  { name: "Skills", href: "#skills", icon: Code },
-  { name: "Experience", href: "#experience", icon: Award },
-  { name: "Projects", href: "#projects", icon: FolderGit2 },
+  { name: "Home", href: "#hero" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
+  { name: "Contact", href: "#contact" }
 ];
 
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", newTheme);
-    setTheme(newTheme);
-  };
-
-  return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800"
-      title="Toggle theme"
-      aria-label="Toggle theme"
-    >
-      {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-    </button>
-  );
-};
-
 export const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("#hero");
-  const [showNavbar, setShowNavbar] = useState(true);
-  const lastScrollYRef = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollYRef.current && currentScrollY > 100) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
-      }
-
-      lastScrollYRef.current = currentScrollY;
-
-      const sections = navItems.map((item) => item.href);
-      const scrollPosition = currentScrollY + 100;
-
-      for (const section of sections) {
-        const element = document.querySelector(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <>
-      {/* Top Right Buttons */}
-      <motion.div
-        className="fixed top-4 right-4 z-50 flex gap-2"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        {/* GitHub Button */}
-        <motion.a
-          href="https://github.com/AhmedAlSunbati712" 
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            "p-2 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md",
-            "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700/50",
-            "border border-gray-200 dark:border-gray-700 shadow-sm",
-            "flex items-center justify-center"
-          )}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          title="GitHub Profile"
-          aria-label="GitHub Profile"
-        >
-          <Github className="w-5 h-5" />
-        </motion.a>
+    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur-sm">
+      <div className="container mx-auto max-w-6xl px-6 py-3">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <img
+              src={assetUrl("/avatar-icon.png")}
+              alt="Avatar icon"
+              className="h-8 w-8 rounded-full border border-border object-cover"
+            />
+            <span className="text-sm font-medium tracking-tight">Ahmed Al Sunbati</span>
+          </div>
 
-        {/* LinkedIn Button */}
-        <motion.a
-          href="https://www.linkedin.com/in/ahmed-al-sunbati" 
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            "p-2 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md",
-            "text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/50",
-            "border border-gray-200 dark:border-gray-700 shadow-sm",
-            "flex items-center justify-center"
-          )}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          title="LinkedIn Profile"
-          aria-label="LinkedIn Profile"
-        >
-          <Linkedin className="w-5 h-5" />
-        </motion.a>
-      </motion.div>
-
-      {/* Bottom Navbar */}
-      <motion.div
-        className={cn(
-          "fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50",
-          "transition-transform duration-300 ease-in-out",
-          showNavbar ? "translate-y-0" : "translate-y-full"
-        )}
-        style={{ willChange: "transform" }}
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-md rounded-full shadow-lg p-2 border border-gray-200 dark:border-gray-700">
-          <div className="flex space-x-1 items-center">
+          <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className={cn(
-                  "p-2 rounded-full transition-colors flex flex-col items-center",
-                  activeSection === item.href
-                    ? "bg-primary text-white"
-                    : "text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
-                )}
-                aria-label={item.name}
+                className="transition-colors hover:text-foreground"
               >
-                <item.icon className="w-5 h-5" />
-                <span className="text-xs mt-1 hidden md:block">{item.name}</span>
+                {item.name}
               </a>
             ))}
-            <div className="flex items-center px-2">
-              <ThemeToggle />
-            </div>
+            <Link to="/blog" className="transition-colors hover:text-foreground">
+              Blog
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="https://github.com/AhmedAlSunbati712"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="GitHub profile"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ahmed-al-sunbati"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
           </div>
         </div>
-      </motion.div>
-    </>
+      </div>
+    </header>
   );
 };

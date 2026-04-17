@@ -6,4 +6,7 @@ export const cn = (...inputs) => {
 };
 
 /** Public asset URL that respects Vite base (works on Vercel root and GH Pages subpath). */
-export const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+export const assetUrl = (path) => {
+  const normalizedPath = path.replace(/^\//, "");
+  return `${import.meta.env.BASE_URL}${encodeURI(normalizedPath)}`;
+};

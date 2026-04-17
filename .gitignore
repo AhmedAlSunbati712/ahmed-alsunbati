@@ -25,3 +25,9 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+BLOG_ARCHITECTURE.md
+IMPLEMENTATION_MAP.md
+DESIGN_BRIEF.md
+STYLE_GUARDRAILS.md
+design_tokens.json
