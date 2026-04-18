@@ -1,16 +1,15 @@
 import { motion } from "framer-motion";
 
-// React Icons - Simple Icons (tech logos)
-import { 
-  SiJavascript, 
-  SiTypescript, 
-  SiReact, 
-  SiNodedotjs, 
-  SiExpress, 
-  SiMongodb, 
-  SiPostgresql, 
-  SiGraphql, 
-  SiGit, 
+import {
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiNodedotjs,
+  SiExpress,
+  SiMongodb,
+  SiPostgresql,
+  SiGraphql,
+  SiGit,
   SiDocker,
   SiPython,
   SiAngular,
@@ -29,7 +28,6 @@ import { TbApi, TbBrain, TbDatabase, TbRobot, TbMessageChatbot } from "react-ico
 import { BsGearWideConnected } from "react-icons/bs";
 
 const skills = [
-  // Languages
   { name: "Java", category: "languages", icon: FaJava },
   { name: "Python", category: "languages", icon: SiPython },
   { name: "JavaScript", category: "languages", icon: SiJavascript },
@@ -37,8 +35,6 @@ const skills = [
   { name: "C", category: "languages", icon: SiC },
   { name: "C++", category: "languages", icon: SiCplusplus },
   { name: "Go", category: "languages", icon: SiGo },
-
-  // Web & Full-Stack
   { name: "React", category: "fullstack", icon: SiReact },
   { name: "Angular", category: "fullstack", icon: SiAngular },
   { name: "Node.js", category: "fullstack", icon: SiNodedotjs },
@@ -49,16 +45,12 @@ const skills = [
   { name: "GraphQL", category: "fullstack", icon: SiGraphql },
   { name: "REST API", category: "fullstack", icon: TbApi },
   { name: "HTML/CSS", category: "fullstack", icon: SiHtml5 },
-
-  // Tools
   { name: "Git", category: "tools", icon: SiGit },
   { name: "CI/CD", category: "tools", icon: BsGearWideConnected },
   { name: "Docker", category: "tools", icon: SiDocker },
   { name: "AWS", category: "tools", icon: SiAmazonwebservices },
   { name: "Kubernetes", category: "tools", icon: SiKubernetes },
   { name: "CUDA", category: "tools", icon: SiNvidia },
-
-  // AI & Data
   { name: "TensorFlow", category: "aidata", icon: SiTensorflow },
   { name: "Deep Learning", category: "aidata", icon: TbBrain },
   { name: "Reinforcement Learning", category: "aidata", icon: TbRobot },

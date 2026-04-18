@@ -9,27 +9,21 @@ const projects = [
     title: "Smart Receipts",
     category: "Web Development",
     description: "A scalable full-stack receipt processing system with Express, PostgreSQL/Prisma, and AWS S3; features an asynchronous BullMQ + Redis pipeline for OCR (Tesseract) and LLM-based data extraction, with a React + TypeScript frontend for real-time visualization.",
-    image: "/projects/smart-receipts.png", // TODO: Replace with actual Smart Receipts screenshot
+    image: "/projects/smart-receipts.png",
     tags: ["TypeScript", "Express", "PostgreSQL", "Prisma", "BullMQ", "Redis", "AWS S3", "Tesseract OCR", "LLM"],
     githubUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-backend",
     frontendUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-frontend",
     featured: true,
-    accentColor: "from-teal-500 to-cyan-600",
-    status: "Complete",
-    highlights: ["OCR processing pipeline", "LLM-based extraction", "Real-time analytics"]
   },
   {
     id: 2,
     title: "P2P VideoChat over UDP",
     category: "Networking",
     description: "A peer-to-peer encrypted video calling system in Python over UDP; features custom reliable transport with sequence numbering and selective retransmission, multithreading for real-time frame processing, and Diffie-Hellman key exchange for secure communication.",
-    image: "/projects/videochat.png", // TODO: Replace with actual VideoChat screenshot
+    image: "/projects/videochat.png",
     tags: ["Python", "UDP Sockets", "Multithreading", "Diffie-Hellman", "Cryptography", "Network Protocol"],
     githubUrl: "https://github.com/AhmedAlSunbati712/videochat-app",
     featured: true,
-    accentColor: "from-cyan-500 to-teal-600",
-    status: "Complete",
-    highlights: ["P2P architecture", "End-to-end encryption", "Custom reliable transport"]
   },
   {
     id: 3,
@@ -40,9 +34,6 @@ const projects = [
     tags: ["C", "Operating Systems", "Kernel Development"],
     githubUrl: "https://github.com/AhmedAlSunbati712/tiny-kernels",
     featured: true,
-    accentColor: "from-blue-500 to-cyan-600",
-    status: "Complete",
-    highlights: ["Kernel development", "Process management", "System calls"]
   },
   {
     id: 4,
@@ -53,9 +44,6 @@ const projects = [
     tags: ["C", "Multithreading", "Search Algorithms"],
     githubUrl: "https://github.com/AhmedAlSunbati712/Tiny-Search-Engine",
     featured: true,
-    accentColor: "from-blue-500 to-indigo-600",
-    status: "Complete",
-    highlights: ["Multithreaded crawling", "Indexing", "Ranked retrieval"]
   },
   {
     id: 6,
@@ -66,9 +54,6 @@ const projects = [
     tags: ["C", "Networking", "Multiplayer"],
     githubUrl: "https://github.com/AhmedAlSunbati712/Nuggets-CS50-Group-project",
     featured: true,
-    accentColor: "from-amber-500 to-orange-600",
-    status: "Complete",
-    highlights: ["Multiplayer game", "Real-time gameplay", "Map navigation"]
   },
   {
     id: 7,
@@ -79,9 +64,6 @@ const projects = [
     tags: ["Python", "Deep Learning", "Computer Vision"],
     githubUrl: "https://github.com/xghouftw/brain-tumor-analysis",
     featured: true,
-    accentColor: "from-emerald-500 to-teal-600",
-    status: "Complete",
-    highlights: ["ResNet", "U-Net", "Medical imaging"]
   },
   {
     id: 8,
@@ -92,9 +74,6 @@ const projects = [
     tags: ["Web Development", "API Integration", "Spotify"],
     githubUrl: "https://github.com/AhmedAlSunbati712/VibeBite",
     featured: true,
-    accentColor: "from-pink-500 to-rose-600",
-    status: "Complete",
-    highlights: ["API integration", "Mood-based recommendations", "Recipe pairing"]
   },
   {
     id: 9,
@@ -105,9 +84,6 @@ const projects = [
     tags: ["Python", "LSTM", "Neuroscience"],
     githubUrl: "https://github.com/AhmedAlSunbati712/memgrid",
     featured: true,
-    accentColor: "from-indigo-500 to-blue-600",
-    status: "Complete",
-    highlights: ["LSTM networks", "Spatial navigation", "Biological modeling"]
   }
 ];
 
