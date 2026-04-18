@@ -1,42 +1,53 @@
-"use client";
-import { motion } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { useInView } from "framer-motion";
-import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
 import { assetUrl } from "@/lib/utils";
+
+type Testimonial = {
+  id: number;
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+  image: string;
+};
+
+const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: "Alex Johnson",
+    role: "Product Director at TechCorp",
+    content:
+      "Working with Sahil was seamless from day one. Not only did they deliver a full-stack solution ahead of schedule, but they also communicated clearly throughout the project. It's rare to find a developer who understands both the tech and the business side so well",
+    rating: 5,
+    image: "/testimonials/alex-johnson.png",
+  },
+  {
+    id: 2,
+    name: "Maria Chen",
+    role: "Senior UX Designer at DesignHub",
+    content:
+      "I've reviewed hundreds of portfolios, and his work is truly exceptional. Tway the animations guide attention while maintaining performance is masterful. The gradient elements add depth without overwhelming.",
+    rating: 5,
+    image: "/testimonials/maria-chen.png",
+  },
+  {
+    id: 3,
+    name: "David Wilson",
+    role: "CTO at Startup Ventures",
+    content:
+      "From wireframes to deployment, Sahil owned the entire stack with confidence and creativity. The final product is fast, reliable, and looks incredible. I wouldn't hesitate to work with them again.",
+    rating: 5,
+    image: "/testimonials/David Wilson.png",
+  },
+];
 
 export const TestimonialSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
-
-  const testimonials = [
-    {
-      id: 1,
-      name: "Alex Johnson",
-      role: "Product Director at TechCorp",
-      content: `Working with Sahil was seamless from day one. Not only did they deliver a full-stack solution ahead of schedule, but they also communicated clearly throughout the project. It's rare to find a developer who understands both the tech and the business side so well`,
-      rating: 5,
-      image: "/testimonials/alex-johnson.png"
-    },
-    {
-      id: 2,
-      name: "Maria Chen",
-      role: "Senior UX Designer at DesignHub",
-      content: `I've reviewed hundreds of portfolios, and his work is truly exceptional. Tway the animations guide attention while maintaining performance is masterful. The gradient elements add depth without overwhelming.`,
-      rating: 5,
-      image: "/testimonials/maria-chen.png"
-    },
-    {
-      id: 3,
-      name: "David Wilson",
-      role: "CTO at Startup Ventures",
-      content: `From wireframes to deployment, Sahil owned the entire stack with confidence and creativity. The final product is fast, reliable, and looks incredible. I wouldn't hesitate to work with them again.`,
-      rating: 5,
-      image: "/testimonials/David Wilson.png"
-    },
-  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,15 +76,11 @@ export const TestimonialSection = () => {
     setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-  const visibleTestimonials = testimonials.slice(
-    currentIndex * itemsPerPage,
-    (currentIndex + 1) * itemsPerPage
-  );
-
-  // Fill empty slots on last page if needed
-  while (visibleTestimonials.length < itemsPerPage) {
-    visibleTestimonials.push(testimonials[visibleTestimonials.length]);
-  }
+  const visibleTestimonials = Array.from({ length: itemsPerPage }, (_, offset) => {
+    const testimonialIndex =
+      (currentIndex * itemsPerPage + offset) % testimonials.length;
+    return testimonials[testimonialIndex];
+  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,9 +88,9 @@ export const TestimonialSection = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
@@ -93,9 +100,9 @@ export const TestimonialSection = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    },
   };
 
   return (
@@ -104,17 +111,16 @@ export const TestimonialSection = () => {
       className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background"
       ref={ref}
     >
-      {/* Floating particles background */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(20)].map((_, index) => (
           <motion.div
-            key={i}
+            key={index}
             className="absolute rounded-full bg-primary/10"
             style={{
-              width: Math.random() * 10 + 2 + 'px',
-              height: Math.random() * 10 + 2 + 'px',
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
+              width: `${Math.random() * 10 + 2}px`,
+              height: `${Math.random() * 10 + 2}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
             }}
             animate={{
               y: [0, (Math.random() - 0.5) * 100],
@@ -124,8 +130,8 @@ export const TestimonialSection = () => {
             transition={{
               duration: Math.random() * 10 + 10,
               repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'linear'
+              repeatType: "reverse",
+              ease: "linear",
             }}
           />
         ))}
@@ -183,15 +189,19 @@ export const TestimonialSection = () => {
                     <Quote className="h-6 w-6 sm:h-8 sm:w-8 text-primary/30 mb-3 sm:mb-4 group-hover:text-primary/50 transition-colors" />
 
                     <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 flex-1">
-                      "{testimonial.content}"
+                      &quot;{testimonial.content}&quot;
                     </p>
 
                     <div className="mt-auto">
                       <div className="flex mb-2">
-                        {[...Array(5)].map((_, i) => (
+                        {[...Array(5)].map((_, index) => (
                           <Star
-                            key={i}
-                            className={`h-4 w-4 sm:h-5 sm:w-5 ${i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-muted-foreground/30'}`}
+                            key={index}
+                            className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                              index < testimonial.rating
+                                ? "text-yellow-400 fill-yellow-400"
+                                : "text-muted-foreground/30"
+                            }`}
                           />
                         ))}
                       </div>
@@ -212,8 +222,12 @@ export const TestimonialSection = () => {
                           )}
                         </div>
                         <div>
-                          <p className="font-medium text-sm sm:text-base">{testimonial.name}</p>
-                          <p className="text-xs sm:text-sm text-muted-foreground">{testimonial.role}</p>
+                          <p className="font-medium text-sm sm:text-base">
+                            {testimonial.name}
+                          </p>
+                          <p className="text-xs sm:text-sm text-muted-foreground">
+                            {testimonial.role}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -222,7 +236,6 @@ export const TestimonialSection = () => {
               ))}
             </div>
 
-            {/* Navigation Arrows - Show only when needed */}
             {totalPages > 1 && (
               <>
                 <button
@@ -244,7 +257,6 @@ export const TestimonialSection = () => {
             )}
           </div>
 
-          {/* Mobile Navigation - Show only when needed */}
           {totalPages > 1 && (
             <div className="flex justify-center gap-3 sm:gap-4 sm:hidden">
               <button
@@ -260,7 +272,9 @@ export const TestimonialSection = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${currentIndex === index ? 'bg-primary' : 'bg-muted-foreground/20'}`}
+                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
+                      currentIndex === index ? "bg-primary" : "bg-muted-foreground/20"
+                    }`}
                     aria-label={`Go to testimonial ${index + 1}`}
                   />
                 ))}
@@ -271,14 +285,13 @@ export const TestimonialSection = () => {
                 className="p-1 sm:p-2 rounded-full border border-muted-foreground/20 hover:border-primary/50 bg-background/80 backdrop-blur-sm transition-all hover:scale-110"
                 aria-label="Next testimonial"
               >
-                <ChevronRight className="h-4 w-4 sm:h-5 sm:h-5" />
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
           )}
         </motion.div>
       </div>
 
-      {/* Animated gradient background elements */}
       <motion.div
         className="absolute inset-0 -z-10 overflow-hidden"
         initial={{ opacity: 0 }}
@@ -294,8 +307,8 @@ export const TestimonialSection = () => {
           transition={{
             duration: 15,
             repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut'
+            repeatType: "reverse",
+            ease: "easeInOut",
           }}
         />
         <motion.div
@@ -307,9 +320,9 @@ export const TestimonialSection = () => {
           transition={{
             duration: 20,
             repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-            delay: 5
+            repeatType: "reverse",
+            ease: "easeInOut",
+            delay: 5,
           }}
         />
       </motion.div>

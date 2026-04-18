@@ -1,5 +1,6 @@
 import { Github, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
+
 import { assetUrl } from "@/lib/utils";
 
 const navItems = [
@@ -7,7 +8,7 @@ const navItems = [
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" }
+  { name: "Contact", href: "#contact" },
 ];
 
 export const Navbar = () => {
@@ -21,7 +22,9 @@ export const Navbar = () => {
               alt="Avatar icon"
               className="h-8 w-8 rounded-full border border-border object-cover"
             />
-            <span className="text-sm font-medium tracking-tight">Ahmed Al Sunbati</span>
+            <span className="text-sm font-medium tracking-tight">
+              Ahmed Al Sunbati
+            </span>
           </div>
 
           <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">

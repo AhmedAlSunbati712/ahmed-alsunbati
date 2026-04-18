@@ -1,9 +1,9 @@
-import { Navbar } from "./components/Navbar";
-import { HeroSection } from "./components/HeroSection";
-import { SkillsSection } from "./components/SkillsSection";
 import { ExperienceSection } from "./components/ExperienceSection";
-import { ProjectsSection } from "./components/ProjectsSection";
 import { Footer } from "./components/Footer";
+import { HeroSection } from "./components/HeroSection";
+import { Navbar } from "./components/Navbar";
+import { ProjectsSection } from "./components/ProjectsSection";
+import { SkillsSection } from "./components/SkillsSection";
 
 export const Home = () => {
   return (

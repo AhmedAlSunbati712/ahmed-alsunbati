@@ -1,5 +1,6 @@
-import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
+import { Briefcase, Calendar, MapPin } from "lucide-react";
+
 import { assetUrl } from "@/lib/utils";
 
 const experiences = [
@@ -10,15 +11,16 @@ const experiences = [
     location: "Dartmouth College, Hanover, NH",
     startDate: "August 2025",
     endDate: "Present",
-    description: "Working on the Deserto team, building a platform making outdoor resources more accessible to the Dartmouth community. Built the rental system, SMS queue infrastructure, and launched a posting feature for Homecoming.",
+    description:
+      "Working on the Deserto team, building a platform making outdoor resources more accessible to the Dartmouth community. Built the rental system, SMS queue infrastructure, and launched a posting feature for Homecoming.",
     responsibilities: [
       "Designed scalable backend architecture for Deserto's posting system (Node.js + PostgreSQL + AWS), supporting 10k+ simulated concurrent requests during load testing",
       "Built asynchronous SMS queue pipeline using AWS SQS and Twilio, ensuring reliability in message delivery",
       "Improved platform performance by 40% via image compression, responsive sizing, and lazy loading; redesigned UI with React + Tailwind",
-      "Developed rental management system for outdoor gear, handling scheduling, concurrency, and data consistency"
+      "Developed rental management system for outdoor gear, handling scheduling, concurrency, and data consistency",
     ],
     image: "/experiences/dali.jpeg",
-    current: true
+    current: true,
   },
   {
     id: 2,
@@ -27,14 +29,15 @@ const experiences = [
     location: "Dartmouth College, Hanover, NH",
     startDate: "March 2025",
     endDate: "October 2025",
-    description: "Researching how the brain reorganizes connectivity during memory encoding and forgetting. Built the lab's fMRI analysis pipeline from scratch with modular components for subject data, brain networks, and preprocessing.",
+    description:
+      "Researching how the brain reorganizes connectivity during memory encoding and forgetting. Built the lab's fMRI analysis pipeline from scratch with modular components for subject data, brain networks, and preprocessing.",
     responsibilities: [
       "Built scalable Python pipelines to process 25GB+ fMRI datasets from 20+ subjects, reducing processing time per subject by 35%",
       "Developed automated clustering & pattern detection workflows using hierarchical clustering, improving pipeline efficiency 25%",
-      "Implemented interactive Python/Plotly dashboards and visualization tools to track processing time, success rates, and anomalies"
+      "Implemented interactive Python/Plotly dashboards and visualization tools to track processing time, success rates, and anomalies",
     ],
     image: "/experiences/cdl.png",
-    current: false
+    current: false,
   },
   {
     id: 3,
@@ -43,15 +46,16 @@ const experiences = [
     location: "Dartmouth College, Hanover, NH",
     startDate: "June 2024",
     endDate: "November 2024",
-    description: "Explored how isolated quantum systems transition between thermalized and localized phases by simulating interacting spins in disordered 1D chains. Focused on information spread and quantum chaos dynamics.",
+    description:
+      "Explored how isolated quantum systems transition between thermalized and localized phases by simulating interacting spins in disordered 1D chains. Focused on information spread and quantum chaos dynamics.",
     responsibilities: [
       "Optimized particle simulation engine in Python, cutting runtime by 60% and enabling simulation of 200% larger systems with ~100 interacting particles",
       "Developed data aggregation pipelines to compute energy spread, entanglement, and correlation metrics, generating structured datasets of 2k+ data points per experiment",
-      "Automated 200+ simulation runs with multithreading and batch processing; built visualization and reporting scripts to analyze system phases"
+      "Automated 200+ simulation runs with multithreading and batch processing; built visualization and reporting scripts to analyze system phases",
     ],
     image: "/experiences/spin.png",
-    current: false
-  }
+    current: false,
+  },
 ];
 
 export const ExperienceSection = () => {
@@ -72,8 +76,8 @@ export const ExperienceSection = () => {
             Work timeline.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Research and engineering roles where I designed, built, and shipped systems
-            with measurable impact.
+            Research and engineering roles where I designed, built, and shipped
+            systems with measurable impact.
           </p>
         </motion.div>
 
@@ -97,7 +101,9 @@ export const ExperienceSection = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h3 className="text-lg font-semibold tracking-tight">{experience.role}</h3>
+                    <h3 className="text-lg font-semibold tracking-tight">
+                      {experience.role}
+                    </h3>
                     {experience.current && (
                       <span className="rounded-full border border-border bg-surface-subtle px-2.5 py-1 text-xs text-muted-foreground">
                         Current
@@ -126,7 +132,10 @@ export const ExperienceSection = () => {
 
               <ul className="mt-4 space-y-2">
                 {experience.responsibilities.slice(0, 3).map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                  >
                     <Briefcase className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <span>{item}</span>
                   </li>

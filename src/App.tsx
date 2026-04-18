@@ -1,16 +1,22 @@
+import { Analytics } from "@vercel/analytics/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home/Home";
-import { NotFound } from "./pages/NotFound/NotFound";
+
+import { Toaster } from "@/components/Toaster/Toaster";
 import { BlogIndex } from "./pages/BlogIndex/BlogIndex";
 import { BlogPost } from "./pages/BlogPost/BlogPost";
-import { Toaster } from "@/components/Toaster/Toaster";
-import { Analytics } from "@vercel/analytics/react";
+import { Home } from "./pages/Home/Home";
+import { NotFound } from "./pages/NotFound/NotFound";
 
 function App() {
+  const basename =
+    import.meta.env.BASE_URL === "/"
+      ? ""
+      : import.meta.env.BASE_URL.replace(/\/$/, "");
+
   return (
     <>
       <Toaster />
-      <BrowserRouter basename={import.meta.env.BASE_URL === "/" ? "" : import.meta.env.BASE_URL.replace(/\/$/, "")}>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route index element={<Home />} />
           <Route path="blog" element={<BlogIndex />} />

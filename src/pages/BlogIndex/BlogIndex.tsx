@@ -4,7 +4,9 @@ export const BlogIndex = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <main className="container mx-auto max-w-3xl px-6 py-24 text-left">
-        <p className="text-sm uppercase tracking-wide text-muted-foreground mb-4">Blog</p>
+        <p className="text-sm uppercase tracking-wide text-muted-foreground mb-4">
+          Blog
+        </p>
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-6">
           Writing is coming soon.
         </h1>

@@ -1,33 +1,41 @@
 import { motion } from "framer-motion";
-
-import {
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNodedotjs,
-  SiExpress,
-  SiMongodb,
-  SiPostgresql,
-  SiGraphql,
-  SiGit,
-  SiDocker,
-  SiPython,
-  SiAngular,
-  SiRedis,
-  SiAmazonwebservices,
-  SiKubernetes,
-  SiTensorflow,
-  SiHtml5,
-  SiGo,
-  SiCplusplus,
-  SiC,
-  SiNvidia
-} from "react-icons/si";
-import { FaJava } from "react-icons/fa";
-import { TbApi, TbBrain, TbDatabase, TbRobot, TbMessageChatbot } from "react-icons/tb";
+import { IconType } from "react-icons";
 import { BsGearWideConnected } from "react-icons/bs";
+import { FaJava } from "react-icons/fa";
+import {
+  SiAmazonwebservices,
+  SiAngular,
+  SiC,
+  SiCplusplus,
+  SiDocker,
+  SiExpress,
+  SiGit,
+  SiGo,
+  SiGraphql,
+  SiHtml5,
+  SiJavascript,
+  SiKubernetes,
+  SiMongodb,
+  SiNodedotjs,
+  SiNvidia,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiTensorflow,
+  SiTypescript,
+} from "react-icons/si";
+import { TbApi, TbBrain, TbDatabase, TbMessageChatbot, TbRobot } from "react-icons/tb";
 
-const skills = [
+type SkillCategory = "languages" | "fullstack" | "tools" | "aidata";
+
+type Skill = {
+  name: string;
+  category: SkillCategory;
+  icon: IconType;
+};
+
+const skills: Skill[] = [
   { name: "Java", category: "languages", icon: FaJava },
   { name: "Python", category: "languages", icon: SiPython },
   { name: "JavaScript", category: "languages", icon: SiJavascript },
@@ -60,14 +68,14 @@ const skills = [
   { name: "Data Analysis", category: "aidata", icon: TbDatabase },
 ];
 
-const categories = [
+const categories: Array<{ id: SkillCategory; label: string }> = [
   { id: "languages", label: "Languages" },
   { id: "fullstack", label: "Web and Full-Stack" },
   { id: "tools", label: "Tools" },
-  { id: "aidata", label: "AI and Data" }
+  { id: "aidata", label: "AI and Data" },
 ];
 
-const SkillCard = ({ skill, index }) => {
+const SkillCard = ({ skill, index }: { skill: Skill; index: number }) => {
   const IconComponent = skill.icon;
 
   return (
@@ -80,9 +88,7 @@ const SkillCard = ({ skill, index }) => {
         <div className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface-subtle">
           <IconComponent className="h-4.5 w-4.5 text-muted-foreground" />
         </div>
-        <span className="text-sm font-medium text-foreground">
-          {skill.name}
-        </span>
+        <span className="text-sm font-medium text-foreground">{skill.name}</span>
       </div>
     </motion.div>
   );
@@ -112,10 +118,14 @@ export const SkillsSection = () => {
 
         <div className="space-y-8">
           {categories.map((category) => {
-            const categorySkills = skills.filter((skill) => skill.category === category.id);
+            const categorySkills = skills.filter(
+              (skill) => skill.category === category.id
+            );
             return (
               <div key={category.id}>
-                <h3 className="mb-3 text-sm font-semibold text-foreground">{category.label}</h3>
+                <h3 className="mb-3 text-sm font-semibold text-foreground">
+                  {category.label}
+                </h3>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {categorySkills.map((skill, index) => (
                     <SkillCard key={skill.name} skill={skill} index={index} />

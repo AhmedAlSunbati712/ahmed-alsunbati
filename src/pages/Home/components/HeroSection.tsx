@@ -1,5 +1,6 @@
-import { Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
+import { Github, Linkedin } from "lucide-react";
+
 import { assetUrl } from "@/lib/utils";
 
 export const HeroSection = () => {
@@ -13,26 +14,25 @@ export const HeroSection = () => {
           transition={{ duration: 0.35 }}
         >
           <div className="text-left">
-            <h1
-              className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl"
-            >
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
               Hello, I am Ahmed.
               <span className="mt-2 block text-muted-foreground">
                 Software engineer
               </span>
             </h1>
 
-            <p
-              className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              I love building things and understanding how complex systems work. Interested in low-level programming, distributed systems, backend infrastructure, machine learning or a combination!
-              I am currently a Software Developer and Mentor at DALI Lab, where I previously worked on Deserto and now on to ZebraMD, an AI-powered platform to support rare-disease patients and physicians.
-              I also do research at the Mind, Brain, and Computation Lab on the tradeoff between generalization and identification in memory systems.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              I love building things and understanding how complex systems work.
+              Interested in low-level programming, distributed systems, backend
+              infrastructure, machine learning or a combination! I am currently
+              a Software Developer and Mentor at DALI Lab, where I previously
+              worked on Deserto and now on to ZebraMD, an AI-powered platform
+              to support rare-disease patients and physicians. I also do
+              research at the Mind, Brain, and Computation Lab on the tradeoff
+              between generalization and identification in memory systems.
             </p>
 
-            <div
-              className="mt-8 flex flex-wrap items-center gap-3"
-            >
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="https://www.linkedin.com/in/ahmed-al-sunbati/"
                 target="_blank"
@@ -54,7 +54,8 @@ export const HeroSection = () => {
             </div>
 
             <p className="mt-5 text-sm text-muted-foreground">
-              Currently working at DALI Lab and Mind, Brain, and Computation Lab.
+              Currently working at DALI Lab and Mind, Brain, and Computation
+              Lab.
             </p>
           </div>
 

@@ -1,27 +1,60 @@
+import { motion } from "framer-motion";
 import { ArrowRight, Github } from "lucide-react";
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+
 import { assetUrl } from "@/lib/utils";
 
-const projects = [
+type Project = {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  tags: string[];
+  githubUrl: string;
+  frontendUrl?: string;
+  featured: boolean;
+};
+
+const projects: Project[] = [
   {
     id: 1,
     title: "Smart Receipts",
     category: "Web Development",
-    description: "A scalable full-stack receipt processing system with Express, PostgreSQL/Prisma, and AWS S3; features an asynchronous BullMQ + Redis pipeline for OCR (Tesseract) and LLM-based data extraction, with a React + TypeScript frontend for real-time visualization.",
+    description:
+      "A scalable full-stack receipt processing system with Express, PostgreSQL/Prisma, and AWS S3; features an asynchronous BullMQ + Redis pipeline for OCR (Tesseract) and LLM-based data extraction, with a React + TypeScript frontend for real-time visualization.",
     image: "/projects/smart-receipts.png",
-    tags: ["TypeScript", "Express", "PostgreSQL", "Prisma", "BullMQ", "Redis", "AWS S3", "Tesseract OCR", "LLM"],
+    tags: [
+      "TypeScript",
+      "Express",
+      "PostgreSQL",
+      "Prisma",
+      "BullMQ",
+      "Redis",
+      "AWS S3",
+      "Tesseract OCR",
+      "LLM",
+    ],
     githubUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-backend",
-    frontendUrl: "https://github.com/AhmedAlSunbati712/smart-receipts-frontend",
+    frontendUrl:
+      "https://github.com/AhmedAlSunbati712/smart-receipts-frontend",
     featured: true,
   },
   {
     id: 2,
     title: "P2P VideoChat over UDP",
     category: "Networking",
-    description: "A peer-to-peer encrypted video calling system in Python over UDP; features custom reliable transport with sequence numbering and selective retransmission, multithreading for real-time frame processing, and Diffie-Hellman key exchange for secure communication.",
+    description:
+      "A peer-to-peer encrypted video calling system in Python over UDP; features custom reliable transport with sequence numbering and selective retransmission, multithreading for real-time frame processing, and Diffie-Hellman key exchange for secure communication.",
     image: "/projects/videochat.png",
-    tags: ["Python", "UDP Sockets", "Multithreading", "Diffie-Hellman", "Cryptography", "Network Protocol"],
+    tags: [
+      "Python",
+      "UDP Sockets",
+      "Multithreading",
+      "Diffie-Hellman",
+      "Cryptography",
+      "Network Protocol",
+    ],
     githubUrl: "https://github.com/AhmedAlSunbati712/videochat-app",
     featured: true,
   },
@@ -29,7 +62,8 @@ const projects = [
     id: 3,
     title: "Yalnix",
     category: "Systems Programming",
-    description: "A UNIX-like operating system kernel for the simulated DCS-58 architecture",
+    description:
+      "A UNIX-like operating system kernel for the simulated DCS-58 architecture",
     image: "/projects/yalnix.png",
     tags: ["C", "Operating Systems", "Kernel Development"],
     githubUrl: "https://github.com/AhmedAlSunbati712/tiny-kernels",
@@ -39,7 +73,8 @@ const projects = [
     id: 4,
     title: "Tiny Search Engine",
     category: "Systems Programming",
-    description: "A search engine in C with multithreaded crawling, indexing, and ranked retrieval",
+    description:
+      "A search engine in C with multithreaded crawling, indexing, and ranked retrieval",
     image: "/projects/tse.png",
     tags: ["C", "Multithreading", "Search Algorithms"],
     githubUrl: "https://github.com/AhmedAlSunbati712/Tiny-Search-Engine",
@@ -49,7 +84,8 @@ const projects = [
     id: 6,
     title: "Nuggets",
     category: "Systems Programming",
-    description: "A C-based multiplayer game in which players navigate a mapped environment to collect gold nuggets",
+    description:
+      "A C-based multiplayer game in which players navigate a mapped environment to collect gold nuggets",
     image: "/projects/nuggets.png",
     tags: ["C", "Networking", "Multiplayer"],
     githubUrl: "https://github.com/AhmedAlSunbati712/Nuggets-CS50-Group-project",
@@ -59,7 +95,8 @@ const projects = [
     id: 7,
     title: "Brain Tumor Analysis",
     category: "Machine Learning",
-    description: "Leveraging ResNet and U-Net for tumor classification and segmentation",
+    description:
+      "Leveraging ResNet and U-Net for tumor classification and segmentation",
     image: "/projects/brain_tumor.png",
     tags: ["Python", "Deep Learning", "Computer Vision"],
     githubUrl: "https://github.com/xghouftw/brain-tumor-analysis",
@@ -69,7 +106,8 @@ const projects = [
     id: 8,
     title: "VibeBite",
     category: "Web Development",
-    description: "A web app that pairs a custom Spotify playlist with a recipe based on your mood, using Spotify, Spoonacular, and OpenAI APIs",
+    description:
+      "A web app that pairs a custom Spotify playlist with a recipe based on your mood, using Spotify, Spoonacular, and OpenAI APIs",
     image: "/projects/vibebite.png",
     tags: ["Web Development", "API Integration", "Spotify"],
     githubUrl: "https://github.com/AhmedAlSunbati712/VibeBite",
@@ -79,18 +117,19 @@ const projects = [
     id: 9,
     title: "Spatial Navigation in Artificial Agents",
     category: "Machine Learning",
-    description: "Spatial navigation with an LSTM, predicting position from self-motion cues. Biologically inspired grid-like representations",
+    description:
+      "Spatial navigation with an LSTM, predicting position from self-motion cues. Biologically inspired grid-like representations",
     image: "/projects/grid-cells.png",
     tags: ["Python", "LSTM", "Neuroscience"],
     githubUrl: "https://github.com/AhmedAlSunbati712/memgrid",
     featured: true,
-  }
+  },
 ];
 
 export const ProjectsSection = () => {
   const [showAll, setShowAll] = useState(false);
   const featuredProject = useMemo(
-    () => projects.find((project) => project.featured) || projects[0],
+    () => projects.find((project) => project.featured) ?? projects[0],
     []
   );
   const otherProjects = useMemo(
@@ -199,7 +238,9 @@ export const ProjectsSection = () => {
               <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
                 {project.category}
               </p>
-              <h4 className="mt-2 text-lg font-semibold tracking-tight">{project.title}</h4>
+              <h4 className="mt-2 text-lg font-semibold tracking-tight">
+                {project.title}
+              </h4>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
