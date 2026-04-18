@@ -25,7 +25,7 @@ export const HeroSection = () => {
             <p
               className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
-              I love building things and understanding how complex systems work.
+              I love building things and understanding how complex systems work. Interested in low-level programming, distributed systems, backend infrastructure, machine learning or a combination!
               I am currently a Software Developer and Mentor at DALI Lab, where I previously worked on Deserto and now on to ZebraMD, an AI-powered platform to support rare-disease patients and physicians.
               I also do research at the Mind, Brain, and Computation Lab on the tradeoff between generalization and identification in memory systems.
             </p>
