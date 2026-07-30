@@ -1,66 +1,69 @@
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import Document from '@tiptap/extension-document';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
-import Heading from '@tiptap/extension-heading';
-import { Editor, EditorContent, useEditor } from '@tiptap/react';
 
-const EditorToolbar = ({ editor }: { editor: Editor }) => {
-  return (
-    <div className="w-full rounded-md flex items-center gap-2">
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>h1</button>
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>h2</button>
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>h3</button>
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}>h4</button>
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}>h5</button>
-      <button className="p-2 rounded-md hover:bg-surface-subtle" onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}>h6</button>
-    </div>
-  )
-}
-
-const TextEditor = () => {
-  const editor = useEditor({
-    extensions: [
-      Document,
-      Paragraph,
-      Text,
-      Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
-      })
-    ],
-    content: `<h1>Hello, World!</h1>`,
-  })
-  if (!editor) return null;
-  return (
-    <div className="w-full max-w-3xl min-h-[200px] border border-border rounded-md p-4 mx-auto">
-      <EditorToolbar editor={editor} />
-      <EditorContent editor={editor} className="min-h-[200px]" />
-    </div>
-  )
-}
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { writingEntries } from "@/data/writing";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 export const BlogIndex = () => {
+  usePageMeta({
+    title: "Writing — Ahmed Al Sunbati",
+    description:
+      "Notes by Ahmed Al Sunbati on storage engines, distributed systems, backend infrastructure, and computational research.",
+    path: "/writing",
+  });
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="container mx-auto max-w-3xl px-6 py-24 text-left">
-        <TextEditor />
-        <p className="text-sm uppercase tracking-wide text-muted-foreground mb-4">
-          Blog
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-6">
-          Writing is coming soon.
-        </h1>
-        <p className="text-lg leading-relaxed text-muted-foreground mb-10">
-          This section is reserved for long-form notes on software engineering,
-          systems thinking, and project breakdowns.
-        </p>
-        <Link
-          to="/"
-          className="inline-flex items-center rounded-md border border-border px-4 py-2 text-sm font-medium hover:bg-surface-subtle transition-colors"
-        >
-          Back to portfolio
-        </Link>
+    <>
+      <SiteHeader />
+      <main className="site-shell writing-index">
+        <header className="writing-hero">
+          <p className="eyebrow">Writing</p>
+          <h1>Notes from the workbench.</h1>
+          <p>
+            Longer-form thinking about storage, infrastructure, distributed
+            systems, and the experiments that sharpen how I build.
+          </p>
+        </header>
+
+        <section className="writing-list" aria-label="Articles">
+          {writingEntries.map((entry, index) => (
+            <Link
+              className="writing-row"
+              key={entry.slug}
+              to={`/writing/${entry.slug}`}
+            >
+              <span className="writing-row-index">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="writing-row-main">
+                <p className="writing-row-meta">
+                  <time dateTime={entry.date}>{entry.displayDate}</time>
+                  <span>{entry.readingTime}</span>
+                </p>
+                <h2>{entry.title}</h2>
+                <p>{entry.description}</p>
+                <ul aria-label="Topics">
+                  {entry.topics.map((topic) => (
+                    <li key={topic}>{topic}</li>
+                  ))}
+                </ul>
+              </div>
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+          ))}
+        </section>
+
+        <aside className="writing-outro">
+          <p className="eyebrow">What’s next</p>
+          <p>
+            Future notes will unpack production failure diagnosis, memory
+            systems, and the design decisions behind my current projects.
+          </p>
+        </aside>
       </main>
-    </div>
+      <SiteFooter />
+    </>
   );
 };
