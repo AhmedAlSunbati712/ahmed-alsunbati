@@ -336,12 +336,83 @@ svg {
   height: 14px;
 }
 
+.hero-reading {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  margin-top: 54px;
+  padding: 15px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-reading > p {
+  color: var(--ink-faint);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.hero-reading-viewport {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 4%,
+    black 96%,
+    transparent
+  );
+}
+
+.hero-reading-track {
+  width: max-content;
+  display: flex;
+  animation: reading-drift 34s linear infinite;
+  will-change: transform;
+}
+
+.hero-reading:hover .hero-reading-track {
+  animation-play-state: paused;
+}
+
+.hero-reading-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: baseline;
+  gap: 42px;
+  padding-right: 42px;
+}
+
+.hero-reading-book {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--ink-soft);
+}
+
+.hero-reading-book cite {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 14px;
+  font-style: normal;
+}
+
+.hero-reading-book > span {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+}
+
 .scroll-cue {
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
   gap: 9px;
-  margin-top: 72px;
+  margin-top: 42px;
   color: var(--ink-faint);
   font-size: 12px;
   letter-spacing: 0.03em;
@@ -597,76 +668,6 @@ svg {
 .project-links a {
   color: var(--ink-soft);
   font-size: 11px;
-}
-
-.reading-section {
-  padding-bottom: 128px;
-  border-top: 1px solid var(--line-strong);
-}
-
-.reading-header {
-  padding: 43px 0 27px;
-}
-
-.reading-header h2 {
-  margin-top: 9px;
-  font-size: clamp(25px, 2.6vw, 36px);
-  font-weight: 540;
-  letter-spacing: -0.045em;
-  line-height: 1.05;
-}
-
-.reading-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.reading-item {
-  min-width: 0;
-  min-height: 265px;
-  display: flex;
-  flex-direction: column;
-  padding: 28px 30px 30px;
-}
-
-.reading-item + .reading-item {
-  border-left: 1px solid var(--line);
-}
-
-.reading-meta,
-.reading-publisher {
-  color: var(--ink-faint);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.reading-item h3 {
-  margin-top: 25px;
-  font-family: var(--serif);
-  font-size: clamp(21px, 2vw, 27px);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1.18;
-}
-
-.reading-item cite {
-  font-style: normal;
-}
-
-.reading-subtitle {
-  margin-top: 11px;
-  color: var(--ink-soft);
-  font-family: var(--serif);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.reading-publisher {
-  margin-top: auto;
-  padding-top: 30px;
 }
 
 .site-footer {
@@ -1263,27 +1264,44 @@ svg {
     flex-direction: column;
   }
 
-  .reading-section {
-    padding-bottom: 92px;
-  }
-
-  .reading-grid {
+  .hero-reading {
     grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 46px;
+    padding: 17px 0 19px;
   }
 
-  .reading-item {
-    min-height: 0;
-    padding: 27px 0 29px;
+  .hero-reading-viewport {
+    mask-image: none;
   }
 
-  .reading-item + .reading-item {
-    border-top: 1px solid var(--line);
-    border-left: 0;
+  .hero-reading-track {
+    width: 100%;
+    animation: none;
   }
 
-  .reading-publisher {
-    margin-top: 24px;
-    padding-top: 0;
+  .hero-reading-group {
+    width: 100%;
+    display: grid;
+    gap: 9px;
+    padding-right: 0;
+  }
+
+  .hero-reading-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .hero-reading-book {
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .hero-reading-book cite {
+    font-size: 13px;
+  }
+
+  .hero-reading-book > span {
+    flex-shrink: 0;
   }
 
   .footer-inner {
@@ -1406,5 +1424,20 @@ svg {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-reading-track {
+    animation: none;
+    transform: none;
+  }
+
+  .hero-reading-group[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@keyframes reading-drift {
+  to {
+    transform: translateX(-50%);
   }
 }

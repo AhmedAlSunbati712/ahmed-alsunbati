@@ -58,6 +58,34 @@ export const Home = () => {
               </a>
             </div>
           </div>
+
+          <div className="hero-reading" aria-label="Currently reading">
+            <p>Currently reading</p>
+            <div className="hero-reading-viewport">
+              <div className="hero-reading-track">
+                {[0, 1].map((groupIndex) => (
+                  <div
+                    className="hero-reading-group"
+                    key={groupIndex}
+                    aria-hidden={groupIndex === 1}
+                  >
+                    {currentlyReading.map((book) => (
+                      <span
+                        className="hero-reading-book"
+                        key={`${groupIndex}-${book.title}`}
+                      >
+                        <cite>{book.title}</cite>
+                        <span>
+                          {book.author} · {book.year}
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <a className="scroll-cue" href="#experience">
             Selected work
             <ArrowDownRight aria-hidden="true" />
@@ -171,31 +199,6 @@ export const Home = () => {
             </div>
           </section>
         </div>
-
-        <section
-          className="reading-section"
-          aria-labelledby="reading-title"
-        >
-          <header className="reading-header">
-            <p className="eyebrow">Reading</p>
-            <h2 id="reading-title">Currently reading.</h2>
-          </header>
-
-          <div className="reading-grid">
-            {currentlyReading.map((book) => (
-              <article className="reading-item" key={book.title}>
-                <p className="reading-meta">
-                  {book.author} · {book.year}
-                </p>
-                <h3>
-                  <cite>{book.title}</cite>
-                </h3>
-                <p className="reading-subtitle">{book.subtitle}</p>
-                <p className="reading-publisher">{book.publisher}</p>
-              </article>
-            ))}
-          </div>
-        </section>
       </main>
       <SiteFooter />
     </>
