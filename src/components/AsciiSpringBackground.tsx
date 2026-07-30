@@ -46,7 +46,7 @@ export const AsciiSpringBackground = () => {
     let imageY = 0;
     let imageWidth = 0;
     let imageHeight = 0;
-    let baseOpacity = 0.08;
+    let baseOpacity = 0.16;
     let isReady = false;
 
     const requestDraw = () => {
@@ -70,15 +70,15 @@ export const AsciiSpringBackground = () => {
       context.imageSmoothingEnabled = true;
 
       imageWidth = compact
-        ? Math.min(560, canvasWidth * 1.08)
-        : Math.min(820, canvasWidth * 0.76);
+        ? Math.min(580, canvasWidth * 1.12)
+        : Math.min(900, canvasWidth * 0.82);
       const imageScale = imageWidth / image.naturalWidth;
       imageHeight = image.naturalHeight * imageScale;
       imageX = compact
         ? canvasWidth - imageWidth * 0.8
         : canvasWidth - imageWidth + 66;
       imageY = Math.max(18, canvasHeight - imageHeight - 22);
-      baseOpacity = compact ? 0.045 : 0.075;
+      baseOpacity = compact ? 0.07 : 0.16;
 
       tiles.length = 0;
 
@@ -97,7 +97,7 @@ export const AsciiSpringBackground = () => {
         image.naturalHeight
       ).data;
 
-      const sourceTileSize = 24;
+      const sourceTileSize = 18;
 
       for (
         let sourceY = 0;
@@ -210,6 +210,9 @@ export const AsciiSpringBackground = () => {
 
       let stillMoving = false;
 
+      context.globalAlpha = baseOpacity;
+      context.drawImage(image, imageX, imageY, imageWidth, imageHeight);
+
       for (const tile of tiles) {
         tile.velocityX += -tile.offsetX * 0.075;
         tile.velocityY += -tile.offsetY * 0.075;
@@ -233,8 +236,15 @@ export const AsciiSpringBackground = () => {
           tile.velocityY = 0;
         }
 
-        context.globalAlpha =
-          baseOpacity + Math.min(0.25, tile.activity * 0.25);
+        if (
+          tile.activity < 0.01 &&
+          tile.offsetX === 0 &&
+          tile.offsetY === 0
+        ) {
+          continue;
+        }
+
+        context.globalAlpha = Math.min(0.42, 0.12 + tile.activity * 0.3);
         context.drawImage(
           image,
           tile.sourceX,
