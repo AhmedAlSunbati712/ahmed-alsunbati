@@ -529,11 +529,12 @@ svg {
   gap: 9px;
 }
 
-.project-period span {
+.project-upcoming,
+.project-status {
   color: var(--accent);
 }
 
-.project-period span::before {
+.project-status::before {
   margin-right: 9px;
   color: var(--line-strong);
   content: "·";
@@ -596,6 +597,76 @@ svg {
 .project-links a {
   color: var(--ink-soft);
   font-size: 11px;
+}
+
+.reading-section {
+  padding-bottom: 128px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.reading-header {
+  padding: 43px 0 27px;
+}
+
+.reading-header h2 {
+  margin-top: 9px;
+  font-size: clamp(25px, 2.6vw, 36px);
+  font-weight: 540;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.reading-item {
+  min-width: 0;
+  min-height: 265px;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 30px 30px;
+}
+
+.reading-item + .reading-item {
+  border-left: 1px solid var(--line);
+}
+
+.reading-meta,
+.reading-publisher {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.reading-item h3 {
+  margin-top: 25px;
+  font-family: var(--serif);
+  font-size: clamp(21px, 2vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.reading-item cite {
+  font-style: normal;
+}
+
+.reading-subtitle {
+  margin-top: 11px;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.reading-publisher {
+  margin-top: auto;
+  padding-top: 30px;
 }
 
 .site-footer {
@@ -1190,6 +1261,29 @@ svg {
   .project-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .reading-section {
+    padding-bottom: 92px;
+  }
+
+  .reading-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reading-item {
+    min-height: 0;
+    padding: 27px 0 29px;
+  }
+
+  .reading-item + .reading-item {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .reading-publisher {
+    margin-top: 24px;
+    padding-top: 0;
   }
 
   .footer-inner {

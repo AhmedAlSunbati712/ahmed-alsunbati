@@ -16,12 +16,21 @@ export type ProjectLink = {
 
 export type Project = {
   title: string;
-  period: string;
+  period?: string;
+  upcoming?: boolean;
   status?: string;
   description: string;
   detail: string;
   technologies: string[];
   links?: ProjectLink[];
+};
+
+export type ReadingEntry = {
+  author: string;
+  year: string;
+  title: string;
+  subtitle: string;
+  publisher: string;
 };
 
 export const experiences: Experience[] = [
@@ -120,6 +129,19 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: "ForkVFS",
+    upcoming: true,
+    description:
+      "A forkable distributed block-storage service with quorum-backed durability and copy-on-write forks.",
+    detail:
+      "Writes are persisted across a quorum of storage nodes, while forks share existing blocks until they diverge.",
+    technologies: [
+      "Distributed storage",
+      "Quorum replication",
+      "Copy-on-write",
+    ],
+  },
+  {
     title: "Proteus",
     period: "Feb 2026",
     description:
@@ -171,5 +193,30 @@ export const projects: Project[] = [
         href: "https://github.com/AhmedAlSunbati712/tiny-kernels",
       },
     ],
+  },
+];
+
+export const currentlyReading: ReadingEntry[] = [
+  {
+    author: "A. Petrov",
+    year: "2019",
+    title: "Database Internals",
+    subtitle: "A Deep Dive into How Distributed Data Systems Work",
+    publisher: "O’Reilly Media",
+  },
+  {
+    author: "M. Kleppmann",
+    year: "2017",
+    title: "Designing Data-Intensive Applications",
+    subtitle:
+      "The Big Ideas Behind Reliable, Scalable, and Maintainable Systems",
+    publisher: "O’Reilly Media",
+  },
+  {
+    author: "T. Jeffery",
+    year: "2021",
+    title: "Distributed Services with Go",
+    subtitle: "Your Guide to Reliable, Scalable, and Maintainable Systems",
+    publisher: "Pragmatic Bookshelf",
   },
 ];

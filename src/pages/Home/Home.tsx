@@ -2,7 +2,7 @@ import { ArrowDownRight, ArrowUpRight, Mail } from "lucide-react";
 
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { experiences, projects } from "@/data/portfolio";
+import { currentlyReading, experiences, projects } from "@/data/portfolio";
 import { usePageMeta } from "@/hooks/use-page-meta";
 
 export const Home = () => {
@@ -128,8 +128,14 @@ export const Home = () => {
                 <article className="project-item" key={project.title}>
                   <div className="project-topline">
                     <div className="project-period">
-                      <time>{project.period}</time>
-                      {project.status && <span>{project.status}</span>}
+                      {project.upcoming ? (
+                        <span className="project-upcoming">Upcoming</span>
+                      ) : (
+                        <time>{project.period}</time>
+                      )}
+                      {project.status && (
+                        <span className="project-status">{project.status}</span>
+                      )}
                     </div>
                   </div>
 
@@ -165,6 +171,31 @@ export const Home = () => {
             </div>
           </section>
         </div>
+
+        <section
+          className="reading-section"
+          aria-labelledby="reading-title"
+        >
+          <header className="reading-header">
+            <p className="eyebrow">Reading</p>
+            <h2 id="reading-title">Currently reading.</h2>
+          </header>
+
+          <div className="reading-grid">
+            {currentlyReading.map((book) => (
+              <article className="reading-item" key={book.title}>
+                <p className="reading-meta">
+                  {book.author} · {book.year}
+                </p>
+                <h3>
+                  <cite>{book.title}</cite>
+                </h3>
+                <p className="reading-subtitle">{book.subtitle}</p>
+                <p className="reading-publisher">{book.publisher}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>
