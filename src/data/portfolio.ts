@@ -70,6 +70,36 @@ export const experiences: Experience[] = [
       "Automated multithreaded sweeps across five dimensions and aggregated results from more than 500 trials.",
     ],
   },
+  {
+    company: "Contextual Dynamics Lab",
+    organization: "Dartmouth College",
+    role: "Software Developer · Research Assistant",
+    period: "Mar 2025 — Oct 2025",
+    location: "Hanover, NH",
+    mark: "C",
+    summary:
+      "Built the lab’s fMRI analysis infrastructure for research on memory encoding and forgetting.",
+    highlights: [
+      "Built modular Python pipelines for 25GB+ fMRI datasets from 20+ participants, reducing per-subject processing time by 35%.",
+      "Automated hierarchical clustering and pattern-detection workflows, improving pipeline efficiency by 25%.",
+      "Created Plotly dashboards to surface processing time, success rates, and processing anomalies.",
+    ],
+  },
+  {
+    company: "Spin Lab",
+    organization: "Dartmouth College",
+    role: "Research Assistant",
+    period: "Jun 2024 — Nov 2024",
+    location: "Hanover, NH",
+    mark: "S",
+    summary:
+      "Simulated interacting spins in disordered 1D chains to study thermalization, localization, information spread, and quantum chaos.",
+    highlights: [
+      "Optimized a Python simulation engine, cutting runtime by 60% and enabling experiments with roughly 100 interacting particles.",
+      "Built aggregation pipelines for energy spread, entanglement, and correlation metrics, producing 2k+ data points per experiment.",
+      "Automated more than 200 multithreaded simulation runs with analysis and visualization scripts.",
+    ],
+  },
 ];
 
 export const projects: Project[] = [
