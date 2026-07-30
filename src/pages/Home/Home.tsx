@@ -1,5 +1,6 @@
 import { ArrowDownRight, ArrowUpRight, Mail } from "lucide-react";
 
+import { AsciiSpringBackground } from "@/components/AsciiSpringBackground";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { currentlyReading, experiences, projects } from "@/data/portfolio";
@@ -17,6 +18,7 @@ export const Home = () => {
       <SiteHeader />
       <main className="site-shell">
         <section className="hero" aria-labelledby="intro-title">
+          <AsciiSpringBackground />
           <div className="hero-heading">
             <div>
               <p className="eyebrow">
