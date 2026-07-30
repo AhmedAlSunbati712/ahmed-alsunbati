@@ -56,11 +56,11 @@ export const BlogPost = () => {
 
             <div className="article-prose">
               <p className="article-lede">
-                I’m building a distributed transactional storage engine in C++.
-                The project starts below SQL, below query planning, and below
-                most of the abstractions that make databases feel friendly:
-                pages, cache state, durable writes, and recovery after an
-                inconveniently timed crash.
+                I’m building StoneleafDB, a distributed transactional storage
+                engine in C++. The project starts below SQL, below query
+                planning, and below most of the abstractions that make databases
+                feel friendly: pages, cache state, durable writes, and recovery
+                after an inconveniently timed crash.
               </p>
 
               <p>

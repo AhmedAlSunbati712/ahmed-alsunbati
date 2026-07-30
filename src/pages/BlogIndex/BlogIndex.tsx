@@ -28,15 +28,12 @@ export const BlogIndex = () => {
         </header>
 
         <section className="writing-list" aria-label="Articles">
-          {writingEntries.map((entry, index) => (
+          {writingEntries.map((entry) => (
             <Link
               className="writing-row"
               key={entry.slug}
               to={`/writing/${entry.slug}`}
             >
-              <span className="writing-row-index">
-                {String(index + 1).padStart(2, "0")}
-              </span>
               <div className="writing-row-main">
                 <p className="writing-row-meta">
                   <time dateTime={entry.date}>{entry.displayDate}</time>

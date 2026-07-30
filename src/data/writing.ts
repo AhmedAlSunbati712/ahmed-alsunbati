@@ -11,7 +11,7 @@ export type WritingEntry = {
 export const writingEntries: WritingEntry[] = [
   {
     slug: "building-a-crash-safe-storage-engine",
-    title: "Building a crash-safe storage engine",
+    title: "Building StoneleafDB",
     description:
       "Working upward from pages and recovery toward transactions, replication, and failover.",
     date: "2026-07-30",

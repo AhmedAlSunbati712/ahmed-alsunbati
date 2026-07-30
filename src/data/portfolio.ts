@@ -74,7 +74,7 @@ export const experiences: Experience[] = [
 
 export const projects: Project[] = [
   {
-    title: "Distributed Transactional Storage Engine",
+    title: "StoneleafDB",
     period: "May 2026 — Present",
     status: "In progress",
     description:
@@ -82,6 +82,12 @@ export const projects: Project[] = [
     detail:
       "Checksummed rollback journaling, two-phase commit, WAL and checkpointing, with a Raft-backed commit plane for leader election and failover.",
     technologies: ["C++", "Raft", "WAL", "Crash recovery"],
+    links: [
+      {
+        label: "Repository",
+        href: "https://github.com/AhmedAlSunbati712/StoneleafDB",
+      },
+    ],
   },
   {
     title: "Proteus",
@@ -91,6 +97,16 @@ export const projects: Project[] = [
     detail:
       "Queue-driven scheduling batches low-latency inference while KEDA scales GPU pods from Redis demand; SegFormer and CatVTON power the vision pipeline.",
     technologies: ["PyTorch", "Kubernetes", "KEDA", "Redis"],
+    links: [
+      {
+        label: "Frontend",
+        href: "https://github.com/AhmedAlSunbati712/proteus-frontend",
+      },
+      {
+        label: "Backend",
+        href: "https://github.com/AhmedAlSunbati712/proteus-backend",
+      },
+    ],
   },
   {
     title: "Smart Receipts",

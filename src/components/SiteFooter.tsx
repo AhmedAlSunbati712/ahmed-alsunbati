@@ -1,5 +1,4 @@
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export const SiteFooter = () => (
   <footer className="site-footer">
@@ -29,7 +28,6 @@ export const SiteFooter = () => (
         >
           LinkedIn <ArrowUpRight aria-hidden="true" />
         </a>
-        <Link to="/writing">Writing</Link>
       </div>
 
       <p className="footer-year">© {new Date().getFullYear()}</p>

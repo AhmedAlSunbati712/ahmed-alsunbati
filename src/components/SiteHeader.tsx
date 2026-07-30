@@ -1,30 +1,9 @@
-import {
-  Github,
-  Linkedin,
-  Moon,
-  Sun,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Github, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { assetUrl } from "@/lib/utils";
 
-type Theme = "light" | "dark";
-
-const initialTheme = (): Theme => {
-  if (typeof document === "undefined") return "light";
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
-};
-
 export const SiteHeader = () => {
-  const [theme, setTheme] = useState<Theme>(initialTheme);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   return (
     <header className="site-header">
       <div className="site-shell header-inner">
@@ -37,7 +16,6 @@ export const SiteHeader = () => {
         <nav className="primary-nav" aria-label="Primary navigation">
           <Link to="/#experience">Experience</Link>
           <Link to="/#projects">Projects</Link>
-          <NavLink to="/writing">Writing</NavLink>
         </nav>
 
         <div className="header-tools">
@@ -59,20 +37,6 @@ export const SiteHeader = () => {
           >
             <Linkedin aria-hidden="true" />
           </a>
-          <button
-            className="icon-link"
-            type="button"
-            onClick={() =>
-              setTheme((current) => (current === "light" ? "dark" : "light"))
-            }
-            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-          >
-            {theme === "light" ? (
-              <Moon aria-hidden="true" />
-            ) : (
-              <Sun aria-hidden="true" />
-            )}
-          </button>
         </div>
       </div>
     </header>
