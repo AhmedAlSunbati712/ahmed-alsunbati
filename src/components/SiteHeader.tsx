@@ -16,6 +16,7 @@ export const SiteHeader = () => {
         <nav className="primary-nav" aria-label="Primary navigation">
           <Link to="/#experience">Experience</Link>
           <Link to="/#projects">Projects</Link>
+          <Link to="/writing">Writing</Link>
         </nav>
 
         <div className="header-tools">
