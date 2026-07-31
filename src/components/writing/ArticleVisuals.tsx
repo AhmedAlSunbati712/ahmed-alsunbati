@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 type VisualSpec = {
   title: string;
@@ -286,33 +292,118 @@ const SearchFlow = (step: number) => {
   );
 };
 
-const Capacity = (step: number, binary = false) => (
-  <div className="capacity-viz">
-    <div className="capacity-formula">
-      {binary ? (
-        <>
-          <span>ceil(log₂(1 billion))</span>
-          <b>= 30 levels</b>
-        </>
-      ) : (
-        <>
-          <span>99 × 100⁴</span>
-          <b>= 9.9 billion keys</b>
-        </>
-      )}
+const BPlusCapacity = (step: number) => {
+  const levels = [
+    { name: "Root", count: "1 page", reach: "100 children" },
+    { name: "Internal", count: "100 pages", reach: "10,000 children" },
+    { name: "Internal", count: "10,000 pages", reach: "1 million children" },
+    {
+      name: "Internal",
+      count: "1 million pages",
+      reach: "100 million leaves",
+    },
+    {
+      name: "Leaves",
+      count: "100 million pages",
+      reach: "99 records per leaf",
+    },
+  ];
+
+  return (
+    <div className="fanout-viz">
+      <div className="fanout-path" aria-hidden="true">
+        {levels.map((level, index) => (
+          <Fragment key={`${level.name}-${level.count}`}>
+            <div
+              className={`fanout-page ${index === step ? "active" : ""} ${
+                index < step ? "complete" : ""
+              }`}
+            >
+              <span>{level.name}</span>
+              <b>{level.count}</b>
+              <i>{level.reach}</i>
+            </div>
+            {index < levels.length - 1 && (
+              <div className={index < step ? "fanout-multiplier complete" : "fanout-multiplier"}>
+                <span>× 100</span>
+                <b>→</b>
+              </div>
+            )}
+          </Fragment>
+        ))}
+      </div>
+      <div className="fanout-summary" aria-live="polite">
+        <span>
+          Level {step + 1} of {levels.length}
+        </span>
+        <strong>{levels[step].count}</strong>
+        <p>{levels[step].reach}</p>
+      </div>
+      <div className="fanout-equation">
+        <span>99 records</span>
+        <b>×</b>
+        <span>100⁴ leaf paths</span>
+        <b>=</b>
+        <strong>9.9 billion keys</strong>
+      </div>
     </div>
-    <div className="capacity-bars" aria-hidden="true">
-      {Array.from({ length: binary ? 6 : 5 }, (_, index) => (
-        <span
-          className={index <= step ? "active" : ""}
-          key={index}
-          style={{ "--bar": index } as React.CSSProperties}
-        />
-      ))}
+  );
+};
+
+const PageReadComparison = (step: number) => {
+  const bPlusReads = Math.min(step + 1, 5);
+  const binaryReads = Math.min((step + 1) * 5, 30);
+
+  return (
+    <div className="read-comparison">
+      <div className="read-path">
+        <header>
+          <div>
+            <strong>B+ tree</strong>
+            <span>wide pages</span>
+          </div>
+          <b>5 page reads</b>
+        </header>
+        <div className="page-read-track bplus" aria-label="Five B+ tree page reads">
+          {Array.from({ length: 5 }, (_, index) => (
+            <i className={index < bPlusReads ? "complete" : ""} key={index}>
+              {index + 1}
+            </i>
+          ))}
+        </div>
+        <p>About 35 comparisons inside five pages.</p>
+      </div>
+
+      <div className="read-path binary">
+        <header>
+          <div>
+            <strong>Binary tree</strong>
+            <span>one key per page</span>
+          </div>
+          <b>30 page reads</b>
+        </header>
+        <div
+          className="page-read-track binary"
+          aria-label="Thirty binary tree page reads"
+        >
+          {Array.from({ length: 30 }, (_, index) => (
+            <i className={index < binaryReads ? "complete" : ""} key={index}>
+              {index + 1}
+            </i>
+          ))}
+        </div>
+        <p>About 30 comparisons, but across thirty dependent pages.</p>
+      </div>
+
+      <div className="read-comparison-status" aria-live="polite">
+        <span>B+ path</span>
+        <strong>{bPlusReads} / 5 pages</strong>
+        <span>Binary path</span>
+        <strong>{binaryReads} / 30 pages</strong>
+      </div>
     </div>
-    <p>{binary ? "Thirty dependent page reads" : "Five wide levels"}</p>
-  </div>
-);
+  );
+};
 
 const LeafInsert = (step: number) => {
   const states = [
@@ -592,13 +683,13 @@ const specs: VisualSpec[] = [
     title: "Wide nodes keep the tree short",
     description: "An order-100 tree can address billions of keys in five levels.",
     steps: 5,
-    render: (step) => Capacity(step),
+    render: BPlusCapacity,
   },
   {
     title: "A binary tree needs more levels",
     description: "The asymptotic complexity matches, but the page-read count does not.",
     steps: 6,
-    render: (step) => Capacity(step, true),
+    render: PageReadComparison,
   },
   {
     title: "A leaf overflows",
