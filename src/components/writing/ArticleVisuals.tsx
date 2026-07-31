@@ -124,30 +124,135 @@ const BalancedTree = (step: number, pathological = false) => {
   );
 };
 
-const BPlusAnatomy = (step: number) => {
-  const route = ["root", "middle", "31"];
-  const active = route[Math.min(step, route.length - 1)];
+const ThreeLevelBPlusTree = ({
+  mode,
+  step,
+}: {
+  mode: "anatomy" | "search";
+  step: number;
+}) => {
+  const anatomy = mode === "anatomy";
+  const rootPathActive = anatomy ? step >= 3 : step >= 1;
+  const leafPathActive = anatomy ? step >= 4 : step >= 3;
+  const showAllInternalPages = anatomy && (step === 0 || step === 1);
+  const showAllLeaves = anatomy && (step === 0 || step === 2);
+  const rootActive = anatomy
+    ? step === 0 || step === 1 || step === 3
+    : step <= 1;
+  const leftInternalActive = anatomy
+    ? step === 1 || step >= 3
+    : step >= 1 && step <= 3;
+  const targetLeafActive = anatomy ? step >= 4 : step >= 3;
+  const rootKeyActive =
+    (anatomy && step === 3) || (!anatomy && step === 1)
+      ? "40"
+      : undefined;
+  const internalKeyActive =
+    (anatomy && step >= 4) || (!anatomy && step === 2)
+      ? "30"
+      : undefined;
+  const leafKeyActive =
+    anatomy && step === 5
+      ? "30:c"
+      : !anatomy && step === 5
+        ? "31:d"
+        : undefined;
+
   return (
-    <div className="bplus-tree" aria-hidden="true">
-      <Page label="internal page" active={active === "root"}>
-        <Cells values={["20", "40"]} tone="internal" />
-      </Page>
-      <div className="viz-branches">
-        <span>keys &lt; 20</span>
-        <span>20 ≤ keys &lt; 40</span>
-        <span>keys ≥ 40</span>
+    <div className="search-tree" aria-hidden="true">
+      <span className={`search-target ${anatomy && step < 3 ? "hidden" : ""}`}>
+        target · 31
+      </span>
+      <svg
+        className="search-tree-edges"
+        viewBox="0 0 900 300"
+        preserveAspectRatio="none"
+      >
+        <path className={rootPathActive ? "active" : ""} d="M450 58 L150 118" />
+        <path d="M450 58 L450 118" />
+        <path d="M450 58 L750 118" />
+        <path d="M150 162 L50 238" />
+        <path d="M150 162 L150 238" />
+        <path className={leafPathActive ? "active" : ""} d="M150 162 L250 238" />
+        <path d="M450 162 L350 238" />
+        <path d="M450 162 L450 238" />
+        <path d="M450 162 L550 238" />
+        <path d="M750 162 L650 238" />
+        <path d="M750 162 L750 238" />
+        <path d="M750 162 L850 238" />
+      </svg>
+      <div className={`search-root ${rootActive ? "active" : ""}`}>
+        <Cells
+          active={rootKeyActive}
+          values={["40", "80"]}
+          tone="internal"
+        />
       </div>
-      <div className="viz-leaf-row">
-        <Cells values={["5:a", "12:b"]} tone="leaf" />
-        <div className={active === "middle" ? "route-active" : ""}>
+      <div className="search-internal-row">
+        <div
+          className={`search-internal ${
+            leftInternalActive || showAllInternalPages ? "active" : ""
+          }`}
+        >
           <Cells
-            active={active === "31" ? "31:d" : undefined}
-            values={["20:c", "31:d"]}
-            tone="leaf"
+            active={internalKeyActive}
+            values={["15", "30"]}
+            tone="internal"
           />
         </div>
-        <Cells values={["40:e", "57:f"]} tone="leaf" />
+        <div className={`search-internal ${showAllInternalPages ? "active" : ""}`}>
+          <Cells values={["50", "65"]} tone="internal" />
+        </div>
+        <div className={`search-internal ${showAllInternalPages ? "active" : ""}`}>
+          <Cells values={["90", "105"]} tone="internal" />
+        </div>
       </div>
+      <div className="search-leaf-row">
+        {[
+          ["5:a"],
+          ["15:b"],
+          ["30:c", "31:d"],
+          ["40:e"],
+          ["50:f"],
+          ["65:g"],
+          ["80:h"],
+          ["90:i"],
+          ["105:j"],
+        ].map((values, index) => (
+          <div
+            className={`search-leaf ${
+              showAllLeaves || (index === 2 && targetLeafActive) ? "active" : ""
+            }`}
+            key={values.join("-")}
+          >
+            <Cells
+              active={index === 2 ? leafKeyActive : undefined}
+              values={values}
+              tone="leaf"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const BPlusAnatomy = (step: number) => {
+  const states = [
+    "One root level, one internal level, and one leaf level.",
+    "Internal pages contain separator keys and child page numbers.",
+    "Leaf pages contain the complete key-value records.",
+    "For target 31, separator 40 routes the search left.",
+    "Separator 30 routes the search to the rightmost leaf.",
+    "30 is copied into the internal page; its record remains in the leaf.",
+  ];
+
+  return (
+    <div className="bplus-anatomy-visual">
+      <ThreeLevelBPlusTree mode="anatomy" step={step} />
+      <p className="anatomy-status" aria-live="polite">
+        {states[step]}
+      </p>
     </div>
   );
 };
@@ -163,82 +268,7 @@ const SearchFlow = (step: number) => {
   ];
   return (
     <div className="viz-code-flow">
-      <div className="search-tree" aria-hidden="true">
-        <span className="search-target">target · 31</span>
-        <svg
-          className="search-tree-edges"
-          viewBox="0 0 900 300"
-          preserveAspectRatio="none"
-        >
-          <path className={step >= 1 ? "active" : ""} d="M450 58 L150 118" />
-          <path d="M450 58 L450 118" />
-          <path d="M450 58 L750 118" />
-          <path d="M150 162 L50 238" />
-          <path d="M150 162 L150 238" />
-          <path className={step >= 3 ? "active" : ""} d="M150 162 L250 238" />
-          <path d="M450 162 L350 238" />
-          <path d="M450 162 L450 238" />
-          <path d="M450 162 L550 238" />
-          <path d="M750 162 L650 238" />
-          <path d="M750 162 L750 238" />
-          <path d="M750 162 L850 238" />
-        </svg>
-        <div className={`search-root ${step <= 1 ? "active" : ""}`}>
-          <Cells
-            active={step === 1 ? "40" : undefined}
-            values={["40", "80"]}
-            tone="internal"
-          />
-        </div>
-        <div className="search-internal-row">
-          <div className={`search-internal ${step >= 1 && step <= 3 ? "active" : ""}`}>
-            <Cells
-              active={step === 2 ? "30" : undefined}
-              values={["15", "30"]}
-              tone="internal"
-            />
-          </div>
-          <div className="search-internal">
-            <Cells values={["50", "65"]} tone="internal" />
-          </div>
-          <div className="search-internal">
-            <Cells values={["90", "105"]} tone="internal" />
-          </div>
-        </div>
-        <div className="search-leaf-row">
-          <div className="search-leaf">
-            <Cells values={["5:a"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["15:b"]} tone="leaf" />
-          </div>
-          <div className={`search-leaf ${step >= 3 ? "active" : ""}`}>
-            <Cells
-              active={step === 5 ? "31:d" : undefined}
-              values={["30:c", "31:d"]}
-              tone="leaf"
-            />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["40:e"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["50:f"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["65:g"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["80:h"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["90:i"]} tone="leaf" />
-          </div>
-          <div className="search-leaf">
-            <Cells values={["105:j"]} tone="leaf" />
-          </div>
-        </div>
-      </div>
+      <ThreeLevelBPlusTree mode="search" step={step} />
       <div className="search-trace" aria-live="polite">
         {lines.map((line, index) => (
           <span
@@ -549,13 +579,13 @@ const specs: VisualSpec[] = [
     title: "Anatomy of a B+ tree",
     description:
       "Separator keys route the search; complete key-value records remain in the leaves.",
-    steps: 3,
+    steps: 6,
     render: BPlusAnatomy,
   },
   {
     title: "Descending from root to leaf",
     description: "Searching for 31 follows one page at each level.",
-    steps: 5,
+    steps: 6,
     render: SearchFlow,
   },
   {

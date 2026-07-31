@@ -2164,6 +2164,11 @@ svg {
   color: var(--ink-soft);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 9px;
+  transition: opacity 180ms ease;
+}
+
+.search-target.hidden {
+  opacity: 0;
 }
 
 .search-tree-edges {
@@ -2314,6 +2319,34 @@ svg {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 9px;
   font-style: normal;
+}
+
+.bplus-anatomy-visual {
+  display: grid;
+  gap: 28px;
+}
+
+.anatomy-status {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 72%);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.anatomy-status::before {
+  flex-shrink: 0;
+  color: var(--ink-faint);
+  content: "Now";
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .capacity-viz {
