@@ -286,6 +286,19 @@ export const MarkdownArticle = ({ markdown }: { markdown: string }) => {
           return <RenderList block={block} key={index} />;
         }
         if (block.type === "code") {
+          if (block.index === 3) {
+            return (
+              <Fragment key={`visual-${block.index}`}>
+                <ArticleVisual index={block.index} />
+                <figure className="article-pseudocode">
+                  <figcaption>Original pseudocode</figcaption>
+                  <pre>
+                    <code>{block.text}</code>
+                  </pre>
+                </figure>
+              </Fragment>
+            );
+          }
           return (
             <ArticleVisual index={block.index} key={`visual-${block.index}`} />
           );

@@ -1791,6 +1791,43 @@ svg {
   font-weight: 570;
 }
 
+.article-pseudocode {
+  width: 100%;
+  margin: -1.35em 0 2.65em;
+  border: 1px solid var(--line-strong);
+  background: #171717;
+  color: #f4f4f1;
+  font-family: var(--sans);
+}
+
+.article-pseudocode figcaption {
+  padding: 12px 16px;
+  border-bottom: 1px solid #353535;
+  color: #a9a9a3;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.article-pseudocode pre {
+  margin: 0;
+  padding: 22px 24px 25px;
+  overflow-x: auto;
+  line-height: 1.7;
+  tab-size: 4;
+}
+
+.article-prose .article-pseudocode code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  white-space: pre;
+}
+
 .article-footer {
   margin-left: 290px;
 }
@@ -2826,6 +2863,10 @@ svg {
 
   .article-visual {
     width: 100%;
+  }
+
+  .article-pseudocode pre {
+    padding: 18px;
   }
 
   .article-visual > figcaption {
