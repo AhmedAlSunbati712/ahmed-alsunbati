@@ -2099,9 +2099,9 @@ svg {
 
 .viz-code-flow {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(210px, 0.75fr);
-  align-items: center;
-  gap: 38px;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 28px;
 }
 
 .viz-code {
@@ -2275,10 +2275,15 @@ svg {
 
 .search-trace {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-content: center;
-  padding: 13px 0;
+  gap: 2px 18px;
+  padding: 13px;
+  border-right: 1px solid var(--line-strong);
   border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 72%);
 }
 
 .search-trace span {
@@ -2890,6 +2895,10 @@ svg {
 
   .viz-code-flow,
   .variable-records {
+    grid-template-columns: 1fr;
+  }
+
+  .search-trace {
     grid-template-columns: 1fr;
   }
 
