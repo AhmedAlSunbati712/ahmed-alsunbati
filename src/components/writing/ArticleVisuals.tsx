@@ -686,50 +686,144 @@ const CascadingTreeSplit = (step: number) => {
   );
 };
 
-const Borrow = (step: number) => (
-  <div className="repair-viz">
-    <p>
-      Parent separator <b>{step < 2 ? "20" : "30"}</b>
-    </p>
-    <div className="viz-leaf-row">
-      <Cells
-        active={step === 1 ? "20" : undefined}
-        values={step < 2 ? ["10"] : ["10", "20"]}
-        tone="leaf"
-      />
-      <span className={`moving-key step-${step}`}>20</span>
-      <Cells
-        active={step === 0 ? "20" : undefined}
-        values={step < 2 ? ["20", "30", "40"] : ["30", "40"]}
-        tone="leaf"
-      />
-    </div>
-    <small>{["underflow", "borrow from the right", "repair complete"][step]}</small>
-  </div>
-);
+const DeletionTree = ({
+  activeLeafIndices,
+  activeLeafKeys,
+  activeParentKey,
+  leaves,
+  parent,
+}: {
+  activeLeafIndices: number[];
+  activeLeafKeys?: Array<string | undefined>;
+  activeParentKey?: string;
+  leaves: string[][];
+  parent: string[];
+}) => {
+  const centers =
+    leaves.length === 3 ? [130, 400, 670] : [220, 580];
 
-const Merge = (step: number) => (
-  <div className="repair-viz merge">
-    <p>
-      {step < 2 ? (
-        <>
-          Parent separator <b>20</b>
-        </>
-      ) : (
-        "One leaf survives; the other page returns to the freelist."
-      )}
-    </p>
-    <div className="viz-leaf-row">
-      <Cells
-        values={step < 2 ? ["10"] : ["10", "20", "30"]}
-        tone="leaf"
-      />
-      {step < 2 && <span className={step === 1 ? "separator-drop" : ""}>20</span>}
-      {step < 2 && <Cells values={["20", "30"]} tone="leaf" />}
+  return (
+    <div className="deletion-tree" aria-hidden="true">
+      <svg viewBox="0 0 800 230" preserveAspectRatio="none">
+        {centers.map((center, index) => (
+          <path
+            className={activeLeafIndices.includes(index) ? "active" : ""}
+            d={`M400 58 L${center} 165`}
+            key={center}
+          />
+        ))}
+      </svg>
+      <div className="deletion-parent">
+        <small>
+          root · {parent.length} separator{parent.length === 1 ? "" : "s"} ·{" "}
+          {parent.length + 1} children
+        </small>
+        <Cells
+          active={activeParentKey}
+          values={parent}
+          tone="internal"
+        />
+      </div>
+      <div
+        className="deletion-leaves"
+        style={{ "--deletion-leaves": leaves.length } as React.CSSProperties}
+      >
+        {leaves.map((values, index) => (
+          <div
+            className={activeLeafIndices.includes(index) ? "active" : ""}
+            key={values.join("-")}
+          >
+            <Cells
+              active={activeLeafKeys?.[index]}
+              values={values}
+              tone="leaf"
+            />
+          </div>
+        ))}
+      </div>
     </div>
-    <small>{["underflow", "merge siblings", "parent entry removed"][step]}</small>
-  </div>
-);
+  );
+};
+
+const Borrow = (step: number) => {
+  const repaired = step >= 3;
+  const leaves =
+    step === 0
+      ? [["10:a"], ["20:b", "30:c", "40:d"]]
+      : step === 1
+        ? [["10:a"], ["30:c", "40:d"]]
+        : [["10:a", "20:b"], ["30:c", "40:d"]];
+  const statuses = [
+    "The left leaf is underfull; the right sibling has one record to spare.",
+    "Remove 20 from the right sibling and move it across the separator.",
+    "Append 20 to the left leaf. The right leaf now starts at 30.",
+    "Replace parent separator 20 with 30. The tree is valid again.",
+  ];
+
+  return (
+    <div className="deletion-tree-visual">
+      <DeletionTree
+        activeLeafIndices={[0, 1]}
+        activeLeafKeys={[
+          step === 2 ? "20:b" : undefined,
+          step === 0 ? "20:b" : repaired ? "30:c" : undefined,
+        ]}
+        activeParentKey={repaired ? "30" : step === 1 ? "20" : undefined}
+        leaves={leaves}
+        parent={repaired ? ["30"] : ["20"]}
+      />
+      {step === 1 && <span className="deletion-moving-key">20</span>}
+      <p className="deletion-status" aria-live="polite">
+        {statuses[step]}
+      </p>
+    </div>
+  );
+};
+
+const Merge = (step: number) => {
+  const merged = step >= 2;
+  const statuses = [
+    "The left leaf is underfull; the right leaf is already at its minimum.",
+    "Neither sibling can lend, so the two leaf pages must merge.",
+    "Merge into [10, 20, 30] and remove separator 20 from the internal root.",
+    "The merged leaf becomes the root; the old right-leaf page is free.",
+  ];
+
+  return (
+    <div className="deletion-tree-visual">
+      {merged ? (
+        <div className="collapsed-root-leaf" aria-hidden="true">
+          <small>root leaf · 3 records</small>
+          <Cells
+            active={step === 2 ? "20:b" : undefined}
+            values={["10:a", "20:b", "30:c"]}
+            tone="leaf"
+          />
+        </div>
+      ) : (
+        <DeletionTree
+          activeLeafIndices={[0, 1]}
+          activeLeafKeys={[
+            step === 1 ? "10:a" : undefined,
+            step === 1 ? "20:b" : undefined,
+          ]}
+          activeParentKey={step === 1 ? "20" : undefined}
+          leaves={[["10:a"], ["20:b", "30:c"]]}
+          parent={["20"]}
+        />
+      )}
+      {merged && (
+        <div className={`freed-leaf-page ${step === 3 ? "complete" : ""}`}>
+          <span>freed page</span>
+          <b>{step === 3 ? "added to freelist" : "detached"}</b>
+        </div>
+      )}
+      <p className="deletion-status" aria-live="polite">
+        {statuses[step]}
+      </p>
+    </div>
+  );
+};
 
 const Offset = (step: number) => {
   const page = [1, 12, 27][step];
@@ -929,13 +1023,13 @@ const specs: VisualSpec[] = [
   {
     title: "Repair by borrowing",
     description: "Moving one entry also changes the parent's routing separator.",
-    steps: 3,
+    steps: 4,
     render: Borrow,
   },
   {
     title: "Repair by merging",
     description: "When neither sibling can spare an entry, two leaves become one.",
-    steps: 3,
+    steps: 4,
     render: Merge,
   },
   {

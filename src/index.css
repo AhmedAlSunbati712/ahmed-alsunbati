@@ -2872,6 +2872,166 @@ svg {
   font-size: 6px;
 }
 
+.deletion-tree-visual {
+  position: relative;
+  display: grid;
+  gap: 24px;
+}
+
+.deletion-tree {
+  position: relative;
+  min-height: 250px;
+}
+
+.deletion-tree > svg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.deletion-tree > svg path {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  transition:
+    filter 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease;
+}
+
+.deletion-tree > svg path.active {
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 0 2px #b8b8b2);
+}
+
+.deletion-parent {
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  left: 50%;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.deletion-parent small {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.deletion-leaves {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 14px;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--deletion-leaves), minmax(0, 1fr));
+  justify-items: center;
+}
+
+.deletion-leaves > div {
+  opacity: 0.48;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.deletion-leaves > div.active {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.deletion-status {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 72%);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.deletion-moving-key {
+  position: absolute;
+  z-index: 3;
+  top: 145px;
+  left: 50%;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 5px #d9d9d4;
+  color: var(--page);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  transform: translateX(-50%);
+}
+
+.collapsed-root-leaf {
+  display: grid;
+  min-height: 250px;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+}
+
+.collapsed-root-leaf small {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.collapsed-root-leaf .viz-cells {
+  box-shadow: 0 0 0 5px #d9d9d4;
+}
+
+.freed-leaf-page {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 0;
+  display: grid;
+  gap: 2px;
+  padding: 9px 11px;
+  border: 1px dashed var(--line-strong);
+  background: var(--page);
+  color: var(--ink-faint);
+}
+
+.freed-leaf-page span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.freed-leaf-page b {
+  font-size: 8px;
+  font-weight: 520;
+}
+
+.freed-leaf-page.complete {
+  border-style: solid;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
 .leaf-insert {
   display: grid;
   min-height: 200px;
