@@ -156,60 +156,86 @@ const SearchFlow = (step: number) => {
   const lines = [
     "start at the root with target 31",
     "31 < 40, so take the left internal page",
-    "at [20], no separator is ≥ 31",
+    "at [15, 30], no separator is ≥ 31",
     "take that internal page's rightmost child",
-    "arrive at leaf [20:c, 31:d]",
+    "arrive at leaf [30:c, 31:d]",
     "binary-search the leaf and find 31",
   ];
   return (
     <div className="viz-code-flow">
       <div className="search-tree" aria-hidden="true">
         <span className="search-target">target · 31</span>
+        <svg
+          className="search-tree-edges"
+          viewBox="0 0 900 300"
+          preserveAspectRatio="none"
+        >
+          <path className={step >= 1 ? "active" : ""} d="M450 58 L150 118" />
+          <path d="M450 58 L450 118" />
+          <path d="M450 58 L750 118" />
+          <path d="M150 162 L50 238" />
+          <path d="M150 162 L150 238" />
+          <path className={step >= 3 ? "active" : ""} d="M150 162 L250 238" />
+          <path d="M450 162 L350 238" />
+          <path d="M450 162 L450 238" />
+          <path d="M450 162 L550 238" />
+          <path d="M750 162 L650 238" />
+          <path d="M750 162 L750 238" />
+          <path d="M750 162 L850 238" />
+        </svg>
         <div className={`search-root ${step <= 1 ? "active" : ""}`}>
           <Cells
             active={step === 1 ? "40" : undefined}
-            values={["40"]}
+            values={["40", "80"]}
             tone="internal"
           />
-        </div>
-        <div className="search-connectors search-connectors-root">
-          <i className={step >= 1 ? "active" : ""} />
-          <i />
         </div>
         <div className="search-internal-row">
           <div className={`search-internal ${step >= 1 && step <= 3 ? "active" : ""}`}>
             <Cells
-              active={step === 2 ? "20" : undefined}
-              values={["20"]}
+              active={step === 2 ? "30" : undefined}
+              values={["15", "30"]}
               tone="internal"
             />
           </div>
           <div className="search-internal">
-            <Cells values={["60"]} tone="internal" />
+            <Cells values={["50", "65"]} tone="internal" />
+          </div>
+          <div className="search-internal">
+            <Cells values={["90", "105"]} tone="internal" />
           </div>
         </div>
-        <div className="search-connectors search-connectors-leaves">
-          <i />
-          <i className={step >= 3 ? "active" : ""} />
-          <i />
-          <i />
-        </div>
-        <div className="viz-leaf-row">
+        <div className="search-leaf-row">
           <div className="search-leaf">
-            <Cells values={["5:a", "12:b"]} tone="leaf" />
+            <Cells values={["5:a"]} tone="leaf" />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["15:b"]} tone="leaf" />
           </div>
           <div className={`search-leaf ${step >= 3 ? "active" : ""}`}>
             <Cells
               active={step === 5 ? "31:d" : undefined}
-              values={["20:c", "31:d"]}
+              values={["30:c", "31:d"]}
               tone="leaf"
             />
           </div>
           <div className="search-leaf">
-            <Cells values={["40:e", "57:f"]} tone="leaf" />
+            <Cells values={["40:e"]} tone="leaf" />
           </div>
           <div className="search-leaf">
-            <Cells values={["60:g", "75:h"]} tone="leaf" />
+            <Cells values={["50:f"]} tone="leaf" />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["65:g"]} tone="leaf" />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["80:h"]} tone="leaf" />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["90:i"]} tone="leaf" />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["105:j"]} tone="leaf" />
           </div>
         </div>
       </div>
