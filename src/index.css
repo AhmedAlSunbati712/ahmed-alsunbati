@@ -2867,7 +2867,7 @@ svg {
 }
 
 .cascade-leaf-row .viz-cells span {
-  min-width: 25px;
+  min-width: 22px;
   padding: 7px 2px;
   font-size: 6px;
 }
