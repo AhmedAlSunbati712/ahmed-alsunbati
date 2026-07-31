@@ -1797,7 +1797,8 @@ svg {
 
 /* Autoplay explainers */
 .article-visual {
-  width: min(1040px, calc(100vw - 64px));
+  width: 100%;
+  max-width: 100%;
   margin: 2.65em 0;
   border: 1px solid var(--line-strong);
   background: #fbfbf9;
@@ -2664,9 +2665,12 @@ svg {
     font-size: clamp(48px, 14vw, 72px);
   }
 
-  .article-visual,
   .article-table-wrap {
     width: calc(100vw - 40px);
+  }
+
+  .article-visual {
+    width: 100%;
   }
 
   .article-visual > figcaption {
