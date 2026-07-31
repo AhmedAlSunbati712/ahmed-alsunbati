@@ -2750,42 +2750,126 @@ svg {
 }
 
 .cascading-tree {
+  position: relative;
+  min-height: 390px;
+}
+
+.cascading-tree > svg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cascading-tree > svg path {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.05;
+  vector-effect: non-scaling-stroke;
+  transition:
+    filter 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease;
+}
+
+.cascading-tree > svg path.active {
+  stroke: var(--ink);
+  stroke-width: 1.75;
+  filter: drop-shadow(0 0 2px #b8b8b2);
+}
+
+.cascade-new-root {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
   display: grid;
-  min-height: 300px;
-  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  transform: translateX(-50%);
+}
+
+.cascade-root-row {
+  position: absolute;
+  z-index: 1;
+  top: 20px;
+  left: 50%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  transform: translateX(-50%);
+}
+
+.root-split .cascade-root-row {
+  top: 75px;
+  display: grid;
+  width: 60%;
+  grid-template-columns: repeat(2, 1fr);
   justify-items: center;
 }
 
-.cascade-level {
+.cascade-root-row > div,
+.cascade-parent-row > div {
   display: grid;
   justify-items: center;
-  gap: 7px;
+  gap: 5px;
 }
 
-.cascade-level > small {
+.cascade-new-root > small,
+.cascade-root-row small,
+.cascade-parent-row small {
   color: var(--ink-faint);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 8px;
-  letter-spacing: 0.06em;
+  font-size: 6.5px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.cascade-node-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 26px;
-}
-
-.cascade-link {
-  display: block;
-  width: 1px;
-  height: 25px;
-  background: var(--line-strong);
-}
-
-.cascade-level.new-root .viz-cells {
+.cascade-new-root .viz-cells {
   box-shadow: 0 0 0 5px #d9d9d4;
+}
+
+.cascade-parent-row {
+  position: absolute;
+  z-index: 1;
+  top: 145px;
+  left: 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(var(--parent-count), minmax(0, 1fr));
+  justify-items: center;
+}
+
+.root-split .cascade-parent-row {
+  top: 175px;
+}
+
+.cascade-parent-row > div {
+  opacity: 0.45;
+}
+
+.cascade-parent-row > div.active {
+  opacity: 1;
+}
+
+.cascade-leaf-row {
+  position: absolute;
+  z-index: 1;
+  top: 305px;
+  left: 0;
+  display: grid;
+  width: 40%;
+  grid-template-columns: repeat(var(--affected-leaves), minmax(0, 1fr));
+  justify-items: center;
+}
+
+.cascade-leaf-row .viz-cells span {
+  min-width: 25px;
+  padding: 7px 2px;
+  font-size: 6px;
 }
 
 .leaf-insert {
@@ -3365,15 +3449,24 @@ svg {
     font-size: 6px;
   }
 
-  .cascade-node-row {
-    gap: 10px;
+  .cascade-parent-row .viz-cells span {
+    min-width: 18px;
+    padding: 7px 1px;
+    font-size: 5px;
   }
 
-  .cascade-level .viz-cells span {
-    min-width: 34px;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-size: 8px;
+  .cascade-root-row .viz-cells span,
+  .cascade-new-root .viz-cells span {
+    min-width: 31px;
+    padding-right: 4px;
+    padding-left: 4px;
+    font-size: 7px;
+  }
+
+  .cascade-leaf-row .viz-cells span {
+    min-width: 15px;
+    padding: 6px 1px;
+    font-size: 4.5px;
   }
 
   .viz-branches {

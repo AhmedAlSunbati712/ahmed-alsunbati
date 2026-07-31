@@ -505,37 +505,127 @@ const CascadingTreeSplit = (step: number) => {
   const parentOverflow = step === 2;
   const rootOverflow = step === 3;
   const rootSplit = step >= 4;
+  const parentPages = step >= 3
+    ? [
+        ["5", "15"],
+        ["30"],
+        ["55", "65"],
+        ["85", "95"],
+        ["115", "125"],
+      ]
+    : [
+        parentOverflow ? ["5", "15", "25", "30"] : ["5", "15", "30"],
+        ["55", "65"],
+        ["85", "95"],
+        ["115", "125"],
+      ];
+  const affectedLeaves = step >= 2
+    ? [
+        ["1:a", "3:b"],
+        ["5:c", "10:d"],
+        ["15:e", "20:f"],
+        ["25:g", "27:h"],
+        ["30:i", "35:j"],
+      ]
+    : [
+        ["1:a", "3:b"],
+        ["5:c", "10:d"],
+        leafOverflow
+          ? ["15:e", "20:f", "25:g", "27:h"]
+          : ["15:e", "20:f", "25:g"],
+        ["30:i", "35:j"],
+      ];
   const statuses = [
-    "Continue from the same full parent, now beneath a full root.",
+    "The full root has three separators and four internal-page children.",
     "Insert 27. The affected leaf overflows and must split.",
-    "Copy 25 upward. The parent now overflows with four separators.",
-    "Split the parent and promote 25. The root now overflows too.",
+    "Copy 25 upward. The parent overflows with four separators and five children.",
+    "Split the parent and promote 25. The root overflows with four separators and five children.",
     "Split the root, promote 80, and allocate a new root page.",
-    "The tree is one level taller; every leaf remains at the same depth.",
+    "The new root has one separator and exactly two child pages.",
   ];
 
   return (
     <div className="insertion-tree-visual cascading">
-      <div className="cascading-tree" aria-hidden="true">
+      <div className={`cascading-tree ${rootSplit ? "root-split" : ""}`} aria-hidden="true">
+        <svg viewBox="0 0 1000 390" preserveAspectRatio="none">
+          {rootSplit ? (
+            <>
+              <path className="active" d="M500 43 L300 92" />
+              <path d="M500 43 L700 92" />
+              <path className="active" d="M300 132 L100 190" />
+              <path className="active" d="M300 132 L300 190" />
+              <path d="M300 132 L500 190" />
+              <path d="M700 132 L700 190" />
+              <path d="M700 132 L900 190" />
+            </>
+          ) : (
+            parentPages.map((_, index) => {
+              const childX =
+                parentPages.length === 4
+                  ? [125, 375, 625, 875][index]
+                  : [100, 300, 500, 700, 900][index];
+              return (
+                <path
+                  className={index === 0 ? "active" : ""}
+                  d={`M500 65 L${childX} 175`}
+                  key={`root-child-${childX}`}
+                />
+              );
+            })
+          )}
+
+          {affectedLeaves.map((_, index) => {
+            const leafX =
+              affectedLeaves.length === 4
+                ? [50, 150, 250, 350][index]
+                : [40, 120, 200, 280, 360][index];
+            const parentX =
+              step >= 3 && index >= 3 ? 300 : step >= 3 ? 100 : 125;
+            return (
+              <path
+                className={
+                  (leafOverflow && index === 2) ||
+                  (step >= 2 && (index === 2 || index === 3))
+                    ? "active"
+                    : ""
+                }
+                d={`M${parentX} 230 L${leafX} 305`}
+                key={`leaf-child-${leafX}`}
+              />
+            );
+          })}
+        </svg>
+
         {rootSplit && (
-          <>
-            <div className="cascade-level new-root">
-              <small>new root</small>
-              <Cells active={step === 4 ? "80" : undefined} values={["80"]} tone="internal" />
-            </div>
-            <span className="cascade-link" />
-          </>
+          <div className="cascade-new-root">
+            <small>new root</small>
+            <Cells
+              active={step === 4 ? "80" : undefined}
+              values={["80"]}
+              tone="internal"
+            />
+          </div>
         )}
 
-        <div className="cascade-level">
-          <small>{rootSplit ? "split root pages" : "root · full"}</small>
-          <div className="cascade-node-row">
-            {rootSplit ? (
-              <>
+        <div className="cascade-root-row">
+          {rootSplit ? (
+            <>
+              <div>
+                <small>2 separators · 3 children</small>
                 <Cells values={["25", "50"]} tone="internal" />
+              </div>
+              <div>
+                <small>1 separator · 2 children</small>
                 <Cells values={["110"]} tone="internal" />
-              </>
-            ) : (
+              </div>
+            </>
+          ) : (
+            <div>
+              <small>
+                {rootOverflow
+                  ? "4 separators · 5 children · overflow"
+                  : "3 separators · 4 children · full"}
+              </small>
               <Cells
                 active={rootOverflow ? "25" : undefined}
                 values={
@@ -545,54 +635,48 @@ const CascadingTreeSplit = (step: number) => {
                 }
                 tone="internal"
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        <span className="cascade-link" />
 
-        <div className="cascade-level">
-          <small>{step >= 3 ? "split parent pages" : "parent · full"}</small>
-          <div className="cascade-node-row">
-            {step >= 3 ? (
-              <>
-                <Cells values={["5", "15"]} tone="internal" />
-                <Cells values={["30"]} tone="internal" />
-              </>
-            ) : (
+        <div
+          className="cascade-parent-row"
+          style={{ "--parent-count": parentPages.length } as React.CSSProperties}
+        >
+          {parentPages.map((values, index) => (
+            <div className={index === 0 || (step >= 3 && index === 1) ? "active" : ""} key={values.join("-")}>
+              <small>
+                {values.length} separator{values.length === 1 ? "" : "s"} ·{" "}
+                {values.length + 1} children
+              </small>
               <Cells
-                active={parentOverflow ? "25" : undefined}
-                values={
-                  parentOverflow
-                    ? ["5", "15", "25", "30"]
-                    : ["5", "15", "30"]
-                }
+                active={parentOverflow && index === 0 ? "25" : undefined}
+                values={values}
                 tone="internal"
               />
-            )}
-          </div>
+            </div>
+          ))}
         </div>
-        <span className="cascade-link" />
 
-        <div className="cascade-level">
-          <small>{leafOverflow ? "leaf · overflow" : "affected leaves"}</small>
-          <div className="cascade-node-row">
-            {step >= 2 ? (
-              <>
-                <Cells values={["15:a", "20:b"]} tone="leaf" />
-                <Cells active={step === 2 ? "25:c" : undefined} values={["25:c", "27:d"]} tone="leaf" />
-              </>
-            ) : (
+        <div
+          className="cascade-leaf-row"
+          style={{ "--affected-leaves": affectedLeaves.length } as React.CSSProperties}
+        >
+          {affectedLeaves.map((values, index) => (
+            <div key={values.join("-")}>
               <Cells
-                active={leafOverflow ? "27:d" : undefined}
-                values={
-                  leafOverflow
-                    ? ["15:a", "20:b", "25:c", "27:d"]
-                    : ["15:a", "20:b", "25:c"]
+                active={
+                  leafOverflow && index === 2
+                    ? "27:h"
+                    : step === 2 && index === 3
+                      ? "25:g"
+                      : undefined
                 }
+                values={values}
                 tone="leaf"
               />
-            )}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
       <p className="insertion-status" aria-live="polite">
