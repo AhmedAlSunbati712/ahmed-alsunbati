@@ -2128,6 +2128,7 @@ svg {
 }
 
 .search-root .viz-cells,
+.search-internal .viz-cells,
 .search-leaf .viz-cells {
   transition:
     box-shadow 220ms ease,
@@ -2141,10 +2142,18 @@ svg {
 
 .search-connectors {
   display: grid;
-  width: 76%;
   height: 34px;
-  grid-template-columns: repeat(3, 1fr);
   justify-items: center;
+}
+
+.search-connectors-root {
+  width: 54%;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.search-connectors-leaves {
+  width: 91%;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .search-connectors i {
@@ -2159,12 +2168,20 @@ svg {
     opacity 220ms ease;
 }
 
-.search-connectors i:first-child {
-  transform: rotate(35deg);
+.search-connectors-root i:first-child {
+  transform: rotate(31deg);
 }
 
-.search-connectors i:last-child {
-  transform: rotate(-35deg);
+.search-connectors-root i:last-child {
+  transform: rotate(-31deg);
+}
+
+.search-connectors-leaves i:nth-child(odd) {
+  transform: rotate(24deg);
+}
+
+.search-connectors-leaves i:nth-child(even) {
+  transform: rotate(-24deg);
 }
 
 .search-connectors i.active {
@@ -2176,6 +2193,25 @@ svg {
 .search-tree .viz-leaf-row {
   width: 100%;
   gap: 9px;
+}
+
+.search-internal-row {
+  display: grid;
+  width: 54%;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+}
+
+.search-internal {
+  opacity: 0.42;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.search-internal.active {
+  opacity: 1;
+  transform: translateY(-3px);
 }
 
 .search-leaf {
