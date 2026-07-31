@@ -112,18 +112,52 @@ memory. Following a pointer to the left or right child is cheap. But databases
 usually have more data than they can fit in memory, which means that some of
 the tree has to spillover onto disk.
 
-This changes the problem quite a bit. We can't store normal memory pointers on
-disk and follow them around. We will have to store numbers of pages that the disk will then have to seek to (if it's a spinning disk), then it can read. Similar concept to pointers but not the same. The process is roughly like this: Figure out the page number you need, the spinning disk seeks there, read it from disk, then put it in memory. We have to do all of that before doing anything else.
+This changes the problem quite a bit. Normal memory pointers are meaningless
+once the process exits, so we cannot store them on disk and expect them to
+still work later. Instead, internal nodes store child page numbers.
 
-To give you a better idea of how different memory and disk access are, let's look at the following:
-- Access Speed:
-    - Disk: x speed, and can support up to x ROPS (read operations per second)
-    - Memory: x speed, and can support up to x ROPS (read operations per second)
-- Reading data:
-    - Memory: You ask for 2 bytes at index y, you get the 2 bytes starting at index y.
-    - Disk: You can't just read the 2 bytes at offset y. Yes, when you make the library call `read(buffer, fd, offset, size)`, you do get what you ask for in the happy path. But what the OS does is that it loads in
-    the whole sector this byte range lives in, extracts the range you asked for, and caches the rest in its own
-    buffer pool. Now imagine storing one binary tree node in each page. We would read 4 KiB just to get one key and two child pointers. Most of that page would be completely wasted. We could try packing multiple binary tree nodes into a page, but at that point we are making the layout more complicated while still working with a tree where every node only has two children.
+The pager uses that number to find the page in the database file. If the page
+is not already cached, it has to be read into memory first. A spinning disk may
+physically seek to it, while an SSD has no moving head, but either way we are
+doing an I/O operation before the tree can continue.
+
+There are two differences that matter here: how long an access takes and how
+much data gets moved around.
+
+Here are some very rough latency numbers:
+
+| Storage | Rough random-read latency | Dependent reads per second |
+| --- | ---: | ---: |
+| Main memory | around 100 ns | around 10 million |
+| Low-latency NVMe SSD | around 20 us | around 50,000 |
+| SATA SSD | around 100 us | around 10,000 |
+| Spinning HDD | around 12 ms | around 80 |
+
+These are not maximum throughput numbers or universal benchmarks. Storage
+devices can process more requests when many of them are queued at once. A tree
+lookup is different because each page tells us which page to read next, so the
+reads are dependent and their latencies mostly add up.
+
+The unit of transfer is different too. From the program's point of view, we can
+ask for two bytes from memory and get those two bytes back. Underneath that,
+the CPU will usually fetch a whole cache line if the data is not already
+cached.
+
+Files work through even larger units. We can call something like
+`pread(fd, buffer, 2, offset)` and ask for two bytes, but the OS and storage
+device still work with filesystem blocks, memory pages, and device sectors.
+The OS will usually keep the extra data in its page cache in case we need it
+again.
+
+My engine makes this unit explicit by reading and writing 4 KiB database
+pages. Now imagine putting one binary tree node in each page. We would read 4
+KiB just to get one key and two child page numbers. Most of the page would be
+wasted.
+
+We could pack several binary tree nodes into one page, but then we would be
+managing a collection of separately connected nodes inside it. At that point,
+it makes more sense to use a tree designed around the page itself and let one
+node hold many keys and children.
 
 The other issue is the height. Our tree with one million keys was around 20
 levels tall. If every node we need happens to be on a different page, a single
@@ -146,6 +180,7 @@ might only need a few levels in a B+ tree.
 That is basically the reason we need B-trees. Their nodes are shaped around how
 the database actually reads data. We do more comparisons inside each node, but
 we read far fewer pages from disk. Damn good deal.
+
 ## 4. The B+ Tree Structure
 
 Before going any further, let's look at what a B+ tree actually looks like.
