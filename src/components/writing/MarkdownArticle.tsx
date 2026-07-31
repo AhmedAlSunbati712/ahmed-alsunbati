@@ -287,6 +287,19 @@ export const MarkdownArticle = ({ markdown }: { markdown: string }) => {
         }
         if (block.type === "code") {
           if (block.index === 6) return null;
+          if (block.index === 20) {
+            return (
+              <figure
+                className="article-pseudocode standalone"
+                key={`pseudocode-${block.index}`}
+              >
+                <figcaption>Original pseudocode</figcaption>
+                <pre>
+                  <code>{block.text}</code>
+                </pre>
+              </figure>
+            );
+          }
           if (block.index === 3) {
             return (
               <Fragment key={`visual-${block.index}`}>
