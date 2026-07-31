@@ -287,7 +287,7 @@ export const MarkdownArticle = ({ markdown }: { markdown: string }) => {
         }
         if (block.type === "code") {
           if (block.index === 6) return null;
-          if (block.index === 20) {
+          if (block.index === 20 || block.index === 21) {
             return (
               <figure
                 className="article-pseudocode standalone"
