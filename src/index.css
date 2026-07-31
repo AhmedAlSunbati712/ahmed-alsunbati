@@ -2110,6 +2110,125 @@ svg {
   font-weight: 500;
 }
 
+.search-tree {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 16px;
+}
+
+.search-target {
+  justify-self: start;
+  padding: 5px 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--page);
+  color: var(--ink-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+}
+
+.search-root .viz-cells,
+.search-leaf .viz-cells {
+  transition:
+    box-shadow 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.search-root.active .viz-cells {
+  box-shadow: 0 0 0 5px #d9d9d4;
+}
+
+.search-connectors {
+  display: grid;
+  width: 76%;
+  height: 34px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+.search-connectors i {
+  width: 1px;
+  height: 39px;
+  background: var(--line-strong);
+  opacity: 0.65;
+  transform-origin: top;
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    opacity 220ms ease;
+}
+
+.search-connectors i:first-child {
+  transform: rotate(35deg);
+}
+
+.search-connectors i:last-child {
+  transform: rotate(-35deg);
+}
+
+.search-connectors i.active {
+  background: var(--ink);
+  box-shadow: 0 0 0 2px #d9d9d4;
+  opacity: 1;
+}
+
+.search-tree .viz-leaf-row {
+  width: 100%;
+  gap: 9px;
+}
+
+.search-leaf {
+  min-width: 0;
+  opacity: 0.42;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.search-leaf.active {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.search-trace {
+  display: grid;
+  align-content: center;
+  padding: 13px 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.search-trace span {
+  display: grid;
+  grid-template-columns: 21px 1fr;
+  gap: 8px;
+  padding: 8px 4px;
+  color: var(--ink-faint);
+  font-size: 10px;
+  line-height: 1.35;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.search-trace span.complete {
+  color: var(--ink-soft);
+}
+
+.search-trace span.active {
+  color: var(--ink);
+  font-weight: 590;
+  transform: translateX(4px);
+}
+
+.search-trace i {
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-style: normal;
+}
+
 .capacity-viz {
   display: grid;
   justify-items: center;
@@ -2690,6 +2809,17 @@ svg {
 
   .search-mini-tree {
     display: none;
+  }
+
+  .search-tree .viz-leaf-row {
+    gap: 4px;
+  }
+
+  .search-tree .viz-cells span {
+    min-width: 36px;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: 8px;
   }
 
   .viz-leaf-row,

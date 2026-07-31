@@ -154,34 +154,56 @@ const BPlusAnatomy = (step: number) => {
 
 const SearchFlow = (step: number) => {
   const lines = [
-    "current = root",
-    "find the first separator ≥ target",
-    "choose the child on the correct side",
-    "save the path when repair may be needed",
-    "binary-search the leaf",
+    "start at the root with target 31",
+    "first separator ≥ 31 is 40",
+    "31 < 40, so take the child to its left",
+    "arrive at the middle leaf",
+    "binary-search the leaf and find 31",
   ];
   return (
     <div className="viz-code-flow">
-      <div className="viz-code" aria-label="B+ tree search pseudocode">
+      <div className="search-tree" aria-hidden="true">
+        <span className="search-target">target · 31</span>
+        <div className={`search-root ${step <= 1 ? "active" : ""}`}>
+          <Cells
+            active={step === 1 ? "40" : undefined}
+            values={["20", "40"]}
+            tone="internal"
+          />
+        </div>
+        <div className="search-connectors">
+          <i />
+          <i className={step >= 2 ? "active" : ""} />
+          <i />
+        </div>
+        <div className="viz-leaf-row">
+          <div className="search-leaf">
+            <Cells values={["5:a", "12:b"]} tone="leaf" />
+          </div>
+          <div className={`search-leaf ${step >= 2 ? "active" : ""}`}>
+            <Cells
+              active={step === 4 ? "31:d" : undefined}
+              values={["20:c", "31:d"]}
+              tone="leaf"
+            />
+          </div>
+          <div className="search-leaf">
+            <Cells values={["40:e", "57:f"]} tone="leaf" />
+          </div>
+        </div>
+      </div>
+      <div className="search-trace" aria-live="polite">
         {lines.map((line, index) => (
-          <span className={index === step ? "active" : ""} key={line}>
-            <i>{String(index + 1).padStart(2, "0")}</i>
+          <span
+            className={`${index === step ? "active" : ""} ${
+              index < step ? "complete" : ""
+            }`}
+            key={line}
+          >
+            <i>{index < step ? "✓" : ""}</i>
             {line}
           </span>
         ))}
-      </div>
-      <div className="search-mini-tree" aria-hidden="true">
-        <Cells
-          active={step < 2 ? "20" : undefined}
-          values={["20", "40"]}
-          tone="internal"
-        />
-        <b>target: 31</b>
-        <Cells
-          active={step === 4 ? "31:d" : undefined}
-          values={["20:c", "31:d"]}
-          tone="leaf"
-        />
       </div>
     </div>
   );
