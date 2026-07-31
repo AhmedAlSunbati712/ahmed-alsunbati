@@ -1,37 +1,51 @@
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WritingSidebar } from "@/components/writing/WritingSidebar";
-import { writingEntries } from "@/data/writing";
+import {
+  entriesForSeries,
+  findWritingSeries,
+} from "@/data/writing";
 import { usePageMeta } from "@/hooks/use-page-meta";
 
-export const BlogIndex = () => {
+export const SeriesDetail = () => {
+  const { seriesSlug } = useParams<{ seriesSlug: string }>();
+  const series = findWritingSeries(seriesSlug);
+  const entries = series ? entriesForSeries(series.slug) : [];
+
   usePageMeta({
-    title: "Writing — Ahmed Al Sunbati",
-    description:
-      "Ahmed Al Sunbati's writing about databases, distributed systems, and infrastructure.",
-    path: "/writing",
+    title: series
+      ? `${series.title} — Writing by Ahmed Al Sunbati`
+      : "Writing Series — Ahmed Al Sunbati",
+    description: series?.description ?? "Writing series by Ahmed Al Sunbati.",
+    path: series ? `/writing/series/${series.slug}` : "/writing/series",
   });
+
+  if (!series) return <Navigate replace to="/writing/series" />;
 
   return (
     <>
       <SiteHeader />
       <main className="site-shell writing-index">
-        <header className="writing-hero">
-          <p className="eyebrow">Writing</p>
-          <h1>My scribbles.</h1>
+        <header className="series-hero">
+          <div>
+            <p className="eyebrow">
+              Writing series <span>{series.status}</span>
+            </p>
+            <h1>{series.title}</h1>
+          </div>
+          <p>{series.description}</p>
         </header>
-
         <div className="writing-page-grid">
           <WritingSidebar />
-          <section className="writing-list" aria-label="All articles">
+          <section className="writing-list" aria-label={`${series.title} articles`}>
             <header className="writing-list-header">
-              <h2>All articles</h2>
-              <span>{writingEntries.length} published</span>
+              <h2>Articles</h2>
+              <span>{entries.length} published</span>
             </header>
-            {writingEntries.map((entry) => (
+            {entries.map((entry) => (
               <Link
                 className="writing-row"
                 key={entry.slug}
@@ -39,7 +53,6 @@ export const BlogIndex = () => {
               >
                 <div className="writing-row-main">
                   <p className="writing-row-meta">
-                    <span>StoneleafDB</span>
                     <span>{entry.readingTime}</span>
                   </p>
                   <h2>{entry.title}</h2>

@@ -6,7 +6,7 @@ export const SiteFooter = () => (
       <div>
         <p className="footer-name">Ahmed Al Sunbati</p>
         <p className="footer-note">
-          Backend engineering, distributed systems, and computational research.
+          Distributed systems, infrastructure, and databases.
         </p>
       </div>
 
