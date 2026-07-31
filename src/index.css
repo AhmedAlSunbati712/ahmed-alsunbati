@@ -2658,6 +2658,136 @@ svg {
   font-weight: 620;
 }
 
+.insertion-tree-visual {
+  display: grid;
+  gap: 24px;
+}
+
+.single-split-tree {
+  position: relative;
+  min-height: 250px;
+}
+
+.single-split-tree > svg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.single-split-tree > svg path {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  transition:
+    filter 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease;
+}
+
+.single-split-tree > svg path.active {
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 0 2px #b8b8b2);
+}
+
+.single-split-parent {
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.single-split-parent .viz-cells {
+  transition:
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.single-split-parent.active .viz-cells {
+  box-shadow: 0 0 0 5px #d9d9d4;
+  transform: translateY(-3px);
+}
+
+.single-split-leaves {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 15px;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--leaf-count), minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+}
+
+.single-split-leaves > div {
+  opacity: 0.45;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.single-split-leaves > div.active {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.insertion-status {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 72%);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.cascading-tree {
+  display: grid;
+  min-height: 300px;
+  align-content: center;
+  justify-items: center;
+}
+
+.cascade-level {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+
+.cascade-level > small {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cascade-node-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+
+.cascade-link {
+  display: block;
+  width: 1px;
+  height: 25px;
+  background: var(--line-strong);
+}
+
+.cascade-level.new-root .viz-cells {
+  box-shadow: 0 0 0 5px #d9d9d4;
+}
+
 .leaf-insert {
   display: grid;
   min-height: 200px;
@@ -3227,6 +3357,23 @@ svg {
     min-width: 41px;
     padding: 9px 7px;
     font-size: 9px;
+  }
+
+  .single-split-leaves .viz-cells span {
+    min-width: 23px;
+    padding: 8px 2px;
+    font-size: 6px;
+  }
+
+  .cascade-node-row {
+    gap: 10px;
+  }
+
+  .cascade-level .viz-cells span {
+    min-width: 34px;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: 8px;
   }
 
   .viz-branches {

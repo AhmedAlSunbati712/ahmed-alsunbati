@@ -405,69 +405,199 @@ const PageReadComparison = (step: number) => {
   );
 };
 
-const LeafInsert = (step: number) => {
-  const states = [
-    { label: "Full leaf", values: ["5:a", "12:b", "20:d"], active: "" },
-    {
-      label: "Insert 15 · overflow",
-      values: ["5:a", "12:b", "15:c", "20:d"],
-      active: "15:c",
-    },
-    { label: "Split", values: ["5:a", "12:b"], active: "" },
+const LeafSplitWithRoom = (step: number) => {
+  const split = step >= 2;
+  const parentUpdated = step >= 3;
+  const leaves = split
+    ? [
+        ["1:a", "3:b"],
+        ["5:c", "12:d"],
+        ["15:e", "20:f"],
+        ["30:g", "35:h"],
+      ]
+    : [
+        ["1:a", "3:b"],
+        step === 1
+          ? ["5:c", "12:d", "15:e", "20:f"]
+          : ["5:c", "12:d", "20:f"],
+        ["30:g", "35:h"],
+      ];
+  const statuses = [
+    "The middle leaf is full; its parent still has one free separator slot.",
+    "Insert 15 into the leaf. Four records overflow its three-record capacity.",
+    "Split the leaf and keep 15 as the first record in the new right leaf.",
+    "Copy 15 into the parent. The parent fits, so propagation stops here.",
   ];
-  const state = states[Math.min(step, 2)];
+
   return (
-    <div className="leaf-insert">
-      <p>{state.label}</p>
-      {step < 2 ? (
-        <Cells
-          active={state.active || undefined}
-          values={state.values}
-          tone="leaf"
-        />
-      ) : (
-        <div className="split-result">
-          <Cells values={["5:a", "12:b"]} tone="leaf" />
-          <span>copy 15 upward</span>
-          <Cells active="15:c" values={["15:c", "20:d"]} tone="leaf" />
+    <div className="insertion-tree-visual">
+      <div className="single-split-tree" aria-hidden="true">
+        <svg viewBox="0 0 800 220" preserveAspectRatio="none">
+          {(split
+            ? [
+                "M400 58 L100 164",
+                "M400 58 L300 164",
+                "M400 58 L500 164",
+                "M400 58 L700 164",
+              ]
+            : [
+                "M400 58 L135 164",
+                "M400 58 L400 164",
+                "M400 58 L665 164",
+              ]
+          ).map((path, index) => (
+            <path
+              className={
+                (split && (index === 1 || index === 2)) ||
+                (!split && index === 1)
+                  ? "active"
+                  : ""
+              }
+              d={path}
+              key={path}
+            />
+          ))}
+        </svg>
+        <div className={`single-split-parent ${parentUpdated ? "active" : ""}`}>
+          <Cells
+            active={parentUpdated ? "15" : undefined}
+            values={parentUpdated ? ["5", "15", "30"] : ["5", "30"]}
+            tone="internal"
+          />
         </div>
-      )}
+        <div
+          className="single-split-leaves"
+          style={{ "--leaf-count": leaves.length } as React.CSSProperties}
+        >
+          {leaves.map((values, index) => (
+            <div
+              className={
+                (!split && index === 1) || (split && (index === 1 || index === 2))
+                  ? "active"
+                  : ""
+              }
+              key={values.join("-")}
+            >
+              <Cells
+                active={
+                  step === 1 && index === 1
+                    ? "15:e"
+                    : parentUpdated && index === 2
+                      ? "15:e"
+                      : undefined
+                }
+                values={values}
+                tone="leaf"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="insertion-status" aria-live="polite">
+        {statuses[step]}
+      </p>
     </div>
   );
 };
 
-const SplitTree = (step: number) => (
-  <div className="split-tree">
-    <div className={step > 0 ? "visible" : ""}>
-      <Cells active="15" values={["15"]} tone="internal" />
-      <small>copied separator</small>
-    </div>
-    <div className="viz-leaf-row">
-      <Cells values={["5:a", "12:b"]} tone="leaf" />
-      <Cells active="15:c" values={["15:c", "20:d"]} tone="leaf" />
-    </div>
-    <p>
-      The record for 15 stays in the leaf. The parent only keeps a routing copy.
-    </p>
-  </div>
-);
-
-const Cascade = (step: number) => {
-  const labels = [
-    "leaf overflows",
-    "split leaf",
-    "parent overflows",
-    "split parent",
-    "new root",
+const CascadingTreeSplit = (step: number) => {
+  const leafOverflow = step === 1;
+  const parentOverflow = step === 2;
+  const rootOverflow = step === 3;
+  const rootSplit = step >= 4;
+  const statuses = [
+    "Continue from the same full parent, now beneath a full root.",
+    "Insert 27. The affected leaf overflows and must split.",
+    "Copy 25 upward. The parent now overflows with four separators.",
+    "Split the parent and promote 25. The root now overflows too.",
+    "Split the root, promote 80, and allocate a new root page.",
+    "The tree is one level taller; every leaf remains at the same depth.",
   ];
+
   return (
-    <div className="cascade-viz">
-      {labels.map((label, index) => (
-        <div className={index === step ? "active" : ""} key={label}>
-          <span>{label}</span>
-          {index < labels.length - 1 && <b aria-hidden="true">→</b>}
+    <div className="insertion-tree-visual cascading">
+      <div className="cascading-tree" aria-hidden="true">
+        {rootSplit && (
+          <>
+            <div className="cascade-level new-root">
+              <small>new root</small>
+              <Cells active={step === 4 ? "80" : undefined} values={["80"]} tone="internal" />
+            </div>
+            <span className="cascade-link" />
+          </>
+        )}
+
+        <div className="cascade-level">
+          <small>{rootSplit ? "split root pages" : "root · full"}</small>
+          <div className="cascade-node-row">
+            {rootSplit ? (
+              <>
+                <Cells values={["25", "50"]} tone="internal" />
+                <Cells values={["110"]} tone="internal" />
+              </>
+            ) : (
+              <Cells
+                active={rootOverflow ? "25" : undefined}
+                values={
+                  rootOverflow
+                    ? ["25", "50", "80", "110"]
+                    : ["50", "80", "110"]
+                }
+                tone="internal"
+              />
+            )}
+          </div>
         </div>
-      ))}
+        <span className="cascade-link" />
+
+        <div className="cascade-level">
+          <small>{step >= 3 ? "split parent pages" : "parent · full"}</small>
+          <div className="cascade-node-row">
+            {step >= 3 ? (
+              <>
+                <Cells values={["5", "15"]} tone="internal" />
+                <Cells values={["30"]} tone="internal" />
+              </>
+            ) : (
+              <Cells
+                active={parentOverflow ? "25" : undefined}
+                values={
+                  parentOverflow
+                    ? ["5", "15", "25", "30"]
+                    : ["5", "15", "30"]
+                }
+                tone="internal"
+              />
+            )}
+          </div>
+        </div>
+        <span className="cascade-link" />
+
+        <div className="cascade-level">
+          <small>{leafOverflow ? "leaf · overflow" : "affected leaves"}</small>
+          <div className="cascade-node-row">
+            {step >= 2 ? (
+              <>
+                <Cells values={["15:a", "20:b"]} tone="leaf" />
+                <Cells active={step === 2 ? "25:c" : undefined} values={["25:c", "27:d"]} tone="leaf" />
+              </>
+            ) : (
+              <Cells
+                active={leafOverflow ? "27:d" : undefined}
+                values={
+                  leafOverflow
+                    ? ["15:a", "20:b", "25:c", "27:d"]
+                    : ["15:a", "20:b", "25:c"]
+                }
+                tone="leaf"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+      <p className="insertion-status" aria-live="polite">
+        {statuses[step]}
+      </p>
     </div>
   );
 };
@@ -692,23 +822,25 @@ const specs: VisualSpec[] = [
     render: PageReadComparison,
   },
   {
-    title: "A leaf overflows",
-    description: "The inserted record is placed in sorted order before the split.",
-    steps: 3,
-    render: LeafInsert,
-  },
-  {
-    title: "A B+ leaf split",
+    title: "Leaf split; parent has room",
     description:
-      "The first key of the right leaf is copied into the parent, not removed from the leaf.",
-    steps: 2,
-    render: SplitTree,
+      "The new separator fits in the parent, so the repair stops after one leaf split.",
+    steps: 4,
+    render: LeafSplitWithRoom,
   },
   {
-    title: "A split can propagate",
-    description: "Only a root split increases the height of the tree.",
-    steps: 5,
-    render: Cascade,
+    title: "Leaf split; parent has room",
+    description:
+      "The new separator fits in the parent, so the repair stops after one leaf split.",
+    steps: 4,
+    render: LeafSplitWithRoom,
+  },
+  {
+    title: "The next split reaches the root",
+    description:
+      "A full leaf, parent, and root split in sequence, creating one new tree level.",
+    steps: 6,
+    render: CascadingTreeSplit,
   },
   {
     title: "Repair by borrowing",

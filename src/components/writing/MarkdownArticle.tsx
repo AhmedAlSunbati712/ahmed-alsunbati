@@ -286,6 +286,7 @@ export const MarkdownArticle = ({ markdown }: { markdown: string }) => {
           return <RenderList block={block} key={index} />;
         }
         if (block.type === "code") {
+          if (block.index === 6) return null;
           if (block.index === 3) {
             return (
               <Fragment key={`visual-${block.index}`}>
