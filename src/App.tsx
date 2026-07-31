@@ -12,6 +12,8 @@ import { BlogIndex } from "./pages/BlogIndex/BlogIndex";
 import { BlogPost } from "./pages/BlogPost/BlogPost";
 import { Home } from "./pages/Home/Home";
 import { NotFound } from "./pages/NotFound/NotFound";
+import { SeriesDetail } from "./pages/SeriesDetail/SeriesDetail";
+import { SeriesIndex } from "./pages/SeriesIndex/SeriesIndex";
 
 const RouteEffects = () => {
   const location = useLocation();
@@ -44,6 +46,11 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="writing" element={<BlogIndex />} />
+          <Route path="writing/series" element={<SeriesIndex />} />
+          <Route
+            path="writing/series/:seriesSlug"
+            element={<SeriesDetail />}
+          />
           <Route path="writing/:slug" element={<BlogPost />} />
           <Route path="blog/*" element={<Navigate replace to="/writing" />} />
           <Route path="*" element={<NotFound />} />
