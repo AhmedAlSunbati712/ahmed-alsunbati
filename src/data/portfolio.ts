@@ -42,12 +42,8 @@ export const experiences: Experience[] = [
     location: "Mountain View, CA",
     mark: "I",
     summary:
-      "Building Vigil, an agent that investigates production runtime errors and CI failures for a high-traffic payments service.",
-    highlights: [
-      "Enriches failures with source context, verifies root-cause hypotheses against the codebase, and delivers diagnoses through Slack and Jira.",
-      "Collapses recurring errors into a single diagnosis job using stack-trace fingerprints, Redis sliding-window counters, and cooldown TTLs.",
-      "Designed a path from one service to roughly 1,000 with consistent-hash monitor partitions, queue-depth autoscaling, and sharded event streams.",
-    ],
+      "Building Vigil, an agent that investigates production runtime errors for a high-traffic payments service.",
+    highlights: [],
   },
   {
     company: "DALI Lab",
